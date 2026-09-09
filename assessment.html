@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Career Assessment - One-Stop Career & Education Advisor</title>
+  <meta name="description" content="Take a 16-question situational career assessment across 8 core domains to uncover your natural technical aptitude and ideal career match.">
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="nav-container container">
+      <a href="index.html" class="brand">
+        <div class="brand-icon">🧭</div>
+        <div class="brand-title">
+          <span>CareerPath</span>
+          <span>One-Stop Advisor</span>
+        </div>
+      </a>
+
+      <ul class="nav-links" id="nav-links">
+        <li class="nav-item"><a href="index.html"><span>🏠</span> Home</a></li>
+        <li class="nav-item"><a href="profile.html"><span>👤</span> Student Profile</a></li>
+        <li class="nav-item"><a href="assessment.html" class="active"><span>📝</span> Career Assessment</a></li>
+        <li class="nav-item"><a href="recommendations.html"><span>🎯</span> Recommendations</a></li>
+        <li class="nav-item"><a href="roadmap.html"><span>🗺️</span> Roadmaps</a></li>
+        <li class="nav-item"><a href="dashboard.html"><span>📊</span> Dashboard</a></li>
+      </ul>
+
+      <div style="display: flex; align-items: center; gap: 0.6rem;">
+        <button class="btn-share-badge" onclick="openShareModal()" title="Get direct shareable link for any student">
+          <span>🔗</span> Share Link
+        </button>
+        <button class="btn-share-badge" onclick="openComparisonModal()" title="Compare any two career paths">
+          <span>⚖️</span> Compare
+        </button>
+        <span id="nav-user-badge" class="nav-user-badge">👤 Guest Student</span>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Toggle Navigation Menu">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="container" id="quiz-container">
+      
+      <!-- Page Header -->
+      <div class="page-header">
+        <div class="page-badge">Step 2 of 4 • Aptitude Assessment</div>
+        <h1 class="page-title">Career Aptitude & Domain Assessment</h1>
+        <p class="page-subtitle">
+          Answer 16 realistic scenarios designed to gauge your problem-solving style, technical instincts, and creative preferences across 8 distinct career domains.
+        </p>
+      </div>
+
+      <!-- Missing Profile Alert Banner -->
+      <div id="profile-check-banner" style="display: none; background: #fef3c7; border: 1.5px solid #f59e0b; border-radius: var(--radius-md); padding: 1rem 1.25rem; margin-bottom: 2rem; color: #92400e; font-size: 0.95rem;">
+        <strong>💡 Pro-Tip for Maximum Accuracy:</strong> You haven't filled out your <a href="profile.html" style="color: #b45309; font-weight: 700; text-decoration: underline;">Student Profile</a> yet. We recommend completing your profile first so our algorithm can factor in your academic stream, CGPA, and favorite subjects!
+      </div>
+
+      <div class="assessment-container">
+        
+        <!-- Progress Bar Tracker -->
+        <div class="quiz-progress-bar-wrapper">
+          <div class="quiz-progress-meta">
+            <span id="quiz-progress-text" style="color: var(--primary); font-weight: 700;">Question 1 of 16</span>
+            <span id="quiz-answered-count" style="color: var(--text-secondary); font-weight: 500;">0 of 16 answered</span>
+          </div>
+          <div class="progress-track">
+            <div id="quiz-progress-fill" class="progress-fill"></div>
+          </div>
+        </div>
+
+        <!-- Active Question Card (Rendered via JS) -->
+        <div id="active-question-card" class="question-card">
+          <!-- Dynamic Question rendered by renderQuestion() in script.js -->
+        </div>
+
+        <!-- Quiz Navigation Controls -->
+        <div class="quiz-navigation">
+          <button type="button" id="quiz-prev-btn" class="btn btn-secondary">
+            <span>←</span> Previous
+          </button>
+          
+          <div style="display: flex; gap: 0.75rem;">
+            <button type="button" id="quiz-next-btn" class="btn btn-primary">
+              Next Question <span>→</span>
+            </button>
+            <button type="button" id="quiz-submit-btn" class="btn btn-success" style="display: none;">
+              <span>★</span> Submit Assessment & Generate Recommendations
+            </button>
+          </div>
+        </div>
+
+        <!-- Domain Assessment Overview Box -->
+        <div class="card" style="margin-top: 3.5rem; background: var(--bg-subtle); border: 1px solid var(--border-color);">
+          <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.75rem; color: var(--text-primary); display: flex; align-items: center; gap: 0.5rem;">
+            <span>🔬</span> 8 Assessment Domains Evaluated
+          </h3>
+          <p style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 1.25rem;">
+            This assessment measures your instinctive approach toward challenges rather than memorized textbook facts.
+          </p>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.75rem; font-size: 0.85rem;">
+            <div style="background: white; padding: 0.6rem 0.8rem; border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
+              💻 <strong>Programming:</strong> Logic, bugs & systems
+            </div>
+            <div style="background: white; padding: 0.6rem 0.8rem; border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
+              🤖 <strong>Artificial Intelligence:</strong> Models & automation
+            </div>
+            <div style="background: white; padding: 0.6rem 0.8rem; border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
+              🛡️ <strong>Cybersecurity:</strong> Defenses & audits
+            </div>
+            <div style="background: white; padding: 0.6rem 0.8rem; border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
+              📊 <strong>Data Science:</strong> Patterns & metrics
+            </div>
+            <div style="background: white; padding: 0.6rem 0.8rem; border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
+              ⚡ <strong>Electronics:</strong> Hardware & IoT
+            </div>
+            <div style="background: white; padding: 0.6rem 0.8rem; border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
+              💼 <strong>Business:</strong> Strategy & markets
+            </div>
+            <div style="background: white; padding: 0.6rem 0.8rem; border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
+              🎨 <strong>Design:</strong> UX, wireframes & empathy
+            </div>
+            <div style="background: white; padding: 0.6rem 0.8rem; border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
+              🗣️ <strong>Communication:</strong> Influence & teams
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom" style="border-top: none; padding-top: 0;">
+        <div>&copy; 2026 One-Stop Personalized Career & Education Advisor. Aptitude Assessment Module.</div>
+        <div>Calculates dynamic weightings without external servers.</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

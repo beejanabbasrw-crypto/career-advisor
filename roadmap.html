@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Education & Skill Roadmap - One-Stop Career & Education Advisor</title>
+  <meta name="description" content="Visual 6-stage education roadmap from School to Job and interactive skill checklist that adapts dynamically to your selected career pathway.">
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="nav-container container">
+      <a href="index.html" class="brand">
+        <div class="brand-icon">🧭</div>
+        <div class="brand-title">
+          <span>CareerPath</span>
+          <span>One-Stop Advisor</span>
+        </div>
+      </a>
+
+      <ul class="nav-links" id="nav-links">
+        <li class="nav-item"><a href="index.html"><span>🏠</span> Home</a></li>
+        <li class="nav-item"><a href="profile.html"><span>👤</span> Student Profile</a></li>
+        <li class="nav-item"><a href="assessment.html"><span>📝</span> Career Assessment</a></li>
+        <li class="nav-item"><a href="recommendations.html"><span>🎯</span> Recommendations</a></li>
+        <li class="nav-item"><a href="roadmap.html" class="active"><span>🗺️</span> Roadmaps</a></li>
+        <li class="nav-item"><a href="dashboard.html"><span>📊</span> Dashboard</a></li>
+      </ul>
+
+      <div style="display: flex; align-items: center; gap: 0.6rem;">
+        <button class="btn-share-badge" onclick="openShareModal()" title="Get direct shareable link for any student">
+          <span>🔗</span> Share Link
+        </button>
+        <button class="btn-share-badge" onclick="openComparisonModal()" title="Compare any two career paths">
+          <span>⚖️</span> Compare
+        </button>
+        <span id="nav-user-badge" class="nav-user-badge">👤 Guest Student</span>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Toggle Navigation Menu">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="container" id="roadmap-container">
+      
+      <!-- Page Header -->
+      <div class="page-header">
+        <div class="page-badge">Step 4 of 4 • Execution Roadmaps</div>
+        <h1 class="page-title">Personalized Education & Skill Roadmap</h1>
+        <p class="page-subtitle">
+          Explore a proven step-by-step educational pathway from school through higher studies or job placement, and check off required technical skills at your own pace.
+        </p>
+      </div>
+
+      <!-- Career Selector Toolbar -->
+      <div class="roadmap-selector-bar">
+        <div class="career-select-wrapper">
+          <label for="roadmap-career-select">Select Career Pathway:</label>
+          <select id="roadmap-career-select" class="form-select" style="min-width: 280px; font-weight: 600;">
+            <!-- Options populated dynamically by script.js -->
+          </select>
+        </div>
+
+        <div style="display: flex; gap: 0.6rem; align-items: center; flex-wrap: wrap;">
+          <button class="btn btn-secondary btn-sm" onclick="openComparisonModal()">
+            <span>⚖️</span> Compare Careers
+          </button>
+          <button class="btn btn-secondary btn-sm" onclick="openShareModal()">
+            <span>🔗</span> Direct Link
+          </button>
+          <a href="dashboard.html" class="btn btn-primary btn-sm">
+            <span>📊</span> View in Dashboard
+          </a>
+          <button class="btn btn-secondary btn-sm" onclick="window.print()">
+            <span>🖨️</span> Print
+          </button>
+        </div>
+      </div>
+
+      <!-- Roadmap Title & Dynamic Description -->
+      <div style="margin-bottom: 2.5rem; text-align: center;">
+        <h2 id="roadmap-title" style="font-size: 2rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.5rem;"></h2>
+        <p id="roadmap-desc" style="color: var(--text-secondary); max-width: 760px; margin: 0 auto; line-height: 1.6; font-size: 1.05rem;"></p>
+      </div>
+
+      <!-- Section: 6-Stage Education Roadmap -->
+      <section style="margin-bottom: 4rem;">
+        <div class="section-header" style="text-align: left; margin-bottom: 2rem;">
+          <h3 style="font-size: 1.4rem; font-weight: 800; color: var(--text-primary); display: flex; align-items: center; gap: 0.5rem;">
+            <span>🎓</span> Academic & Professional Milestones
+          </h3>
+          <p style="color: var(--text-secondary); font-size: 0.95rem;">
+            From School / Intermediate &rarr; Undergraduate Degree &rarr; Core Skills &rarr; Projects &rarr; Internship &rarr; Higher Studies / Industry Job.
+          </p>
+        </div>
+
+        <!-- Vertical Timeline Container (Rendered dynamically via script.js) -->
+        <div id="education-timeline" class="timeline-container"></div>
+      </section>
+
+      <!-- Section: Interactive Skill Roadmap & Tracker -->
+      <section>
+        <div class="skill-tracker-card">
+          <div class="skill-header">
+            <div>
+              <h3 style="font-size: 1.35rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.25rem; display: flex; align-items: center; gap: 0.5rem;">
+                <span>✅</span> Interactive Skill Mastery Roadmap
+              </h3>
+              <p style="color: var(--text-secondary); font-size: 0.9rem;">
+                Click any skill to mark it as mastered. Your progress saves automatically to LocalStorage.
+              </p>
+            </div>
+
+            <div class="skill-progress-stat">
+              <div style="text-align: right;">
+                <div id="skill-progress-pct" class="skill-pct">0%</div>
+                <div id="skill-completed-count" style="font-size: 0.85rem; color: var(--text-muted); font-weight: 500;">0 of 8 mastered</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Progress Bar -->
+          <div class="progress-track" style="height: 12px; margin-bottom: 2rem;">
+            <div id="skill-progress-fill" class="progress-fill" style="background: linear-gradient(90deg, var(--success), #059669);"></div>
+          </div>
+
+          <!-- Skills Checklist Grid (Rendered dynamically via script.js) -->
+          <div id="skills-checklist" class="skills-list"></div>
+
+          <!-- Bottom Banner inside Skill Card -->
+          <div style="margin-top: 2rem; padding: 1rem; background: var(--bg-subtle); border-radius: var(--radius-md); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+            <span style="font-size: 0.85rem; color: var(--text-secondary);">
+              💡 <strong>Tip:</strong> Complete foundational skills first before advancing to complex portfolio projects.
+            </span>
+            <a href="dashboard.html" class="btn btn-outline-primary btn-sm">
+              See Overall Progress in Dashboard &rarr;
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section: Verified Free Learning Resources, Certifications & Industry Outlook -->
+      <section id="career-resources-section"></section>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom" style="border-top: none; padding-top: 0;">
+        <div>&copy; 2026 One-Stop Personalized Career & Education Advisor. Dynamic Roadmaps.</div>
+        <div>All skill progress persists in your browser storage.</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

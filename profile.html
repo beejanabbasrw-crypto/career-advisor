@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Profile - One-Stop Career & Education Advisor</title>
+  <meta name="description" content="Set up your academic details, skills, favorite subjects, and career goals to receive tailored career recommendations.">
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="nav-container container">
+      <a href="index.html" class="brand">
+        <div class="brand-icon">🧭</div>
+        <div class="brand-title">
+          <span>CareerPath</span>
+          <span>One-Stop Advisor</span>
+        </div>
+      </a>
+
+      <ul class="nav-links" id="nav-links">
+        <li class="nav-item"><a href="index.html"><span>🏠</span> Home</a></li>
+        <li class="nav-item"><a href="profile.html" class="active"><span>👤</span> Student Profile</a></li>
+        <li class="nav-item"><a href="assessment.html"><span>📝</span> Career Assessment</a></li>
+        <li class="nav-item"><a href="recommendations.html"><span>🎯</span> Recommendations</a></li>
+        <li class="nav-item"><a href="roadmap.html"><span>🗺️</span> Roadmaps</a></li>
+        <li class="nav-item"><a href="dashboard.html"><span>📊</span> Dashboard</a></li>
+      </ul>
+
+      <div style="display: flex; align-items: center; gap: 0.6rem;">
+        <button class="btn-share-badge" onclick="openShareModal()" title="Get direct shareable link for any student">
+          <span>🔗</span> Share Link
+        </button>
+        <button class="btn-share-badge" onclick="openComparisonModal()" title="Compare any two career paths">
+          <span>⚖️</span> Compare
+        </button>
+        <span id="nav-user-badge" class="nav-user-badge">👤 Guest Student</span>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Toggle Navigation Menu">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="container">
+      
+      <!-- Page Header -->
+      <div class="page-header">
+        <div class="page-badge">Step 1 of 4 • Student Profiling</div>
+        <h1 class="page-title">Personalized Student Profile</h1>
+        <p class="page-subtitle">
+          Tell us about your educational background, core competencies, favorite academic subjects, and long-term aspirations. Our algorithm uses this information to calculate your best-fit career pathways.
+        </p>
+      </div>
+
+      <!-- Quick 1-Click Demo Personas Bar -->
+      <div class="persona-chips-bar" style="max-width: 860px; margin: 0 auto 1.5rem;">
+        <div class="persona-chips-title">
+          <span>⚡ Instant Demo Personas (1-Click Auto-Fill for Testing):</span>
+        </div>
+        <div class="persona-chips-grid">
+          <button type="button" class="persona-btn" onclick="loadDemoPersona('ai')">
+            <span>🤖</span> Anya (AI & ML)
+          </button>
+          <button type="button" class="persona-btn" onclick="loadDemoPersona('software')">
+            <span>💻</span> David (Software Dev)
+          </button>
+          <button type="button" class="persona-btn" onclick="loadDemoPersona('design')">
+            <span>🎨</span> Elena (UI/UX Design)
+          </button>
+          <button type="button" class="persona-btn" onclick="loadDemoPersona('cyber')">
+            <span>🛡️</span> Marcus (Cybersecurity)
+          </button>
+          <button type="button" class="persona-btn" onclick="loadDemoPersona('business')">
+            <span>💼</span> Rohan (Startups & Mgmt)
+          </button>
+        </div>
+      </div>
+
+      <!-- Profile Form Card -->
+      <div class="form-card">
+        <form id="profile-form" novalidate>
+          
+          <div class="form-grid">
+            
+            <!-- Student Full Name -->
+            <div class="form-group">
+              <label for="student-name" class="form-label">
+                <span>👤 Full Name</span> <span class="required">*</span>
+              </label>
+              <input 
+                type="text" 
+                id="student-name" 
+                class="form-input" 
+                placeholder="e.g. Alex Morgan" 
+                autocomplete="name"
+                required
+              >
+              <span class="form-hint">Your name will personalize your dashboard and roadmaps.</span>
+            </div>
+
+            <!-- Current Education Level -->
+            <div class="form-group">
+              <label for="education-level" class="form-label">
+                <span>🎓 Current Education Level</span> <span class="required">*</span>
+              </label>
+              <select id="education-level" class="form-select" required>
+                <option value="">-- Select Education Level --</option>
+                <option value="High School (10th Grade)">High School (10th Grade)</option>
+                <option value="Senior Secondary / 10+2 (12th Grade)">Senior Secondary / 10+2 (12th Grade)</option>
+                <option value="Diploma / Polytechnic">Diploma / Polytechnic</option>
+                <option value="Undergraduate (B.Tech / B.E)">Undergraduate (B.Tech / B.E)</option>
+                <option value="Undergraduate (BCA / B.Sc Computer Science)">Undergraduate (BCA / B.Sc Computer Science)</option>
+                <option value="Undergraduate (B.Sc / B.Com / BBA / B.A)">Undergraduate (B.Sc / B.Com / BBA / B.A)</option>
+                <option value="Postgraduate (M.Tech / MCA / M.Sc / MBA)">Postgraduate (M.Tech / MCA / M.Sc / MBA)</option>
+                <option value="Recent Graduate / Career Switcher">Recent Graduate / Career Switcher</option>
+              </select>
+              <span class="form-hint">Used to structure your baseline education roadmap.</span>
+            </div>
+
+            <!-- Branch / Stream -->
+            <div class="form-group">
+              <label for="branch-stream" class="form-label">
+                <span>📚 Branch / Academic Stream</span> <span class="required">*</span>
+              </label>
+              <input 
+                type="text" 
+                id="branch-stream" 
+                class="form-input" 
+                placeholder="e.g. Computer Science Engineering, Commerce, Science (PCM)..." 
+                required
+              >
+              <span class="form-hint">Example: CSE, IT, Electronics, Commerce, Physical Sciences.</span>
+            </div>
+
+            <!-- Academic Score / CGPA -->
+            <div class="form-group">
+              <label for="academic-score" class="form-label">
+                <span>📈 Academic Score (% or CGPA)</span> <span class="required">*</span>
+              </label>
+              <input 
+                type="text" 
+                id="academic-score" 
+                class="form-input" 
+                placeholder="e.g. 85% or 8.8 CGPA" 
+                required
+              >
+              <span class="form-hint">Analytical and research pathways calibrate with performance.</span>
+            </div>
+
+            <!-- Favorite Subjects (Multi-Select Pills) -->
+            <div class="form-group form-full">
+              <label class="form-label">
+                <span>📖 Favorite Academic Subjects</span>
+                <span style="font-weight: 400; font-size: 0.82rem; color: var(--text-muted);">(Select all that apply)</span>
+              </label>
+              <div class="pills-grid">
+                <label class="pill-choice">
+                  <input type="checkbox" name="subjects" value="Computer Science">
+                  <span class="pill-label">💻 Computer Science</span>
+                </label>
+                <label class="pill-choice">
+                  <input type="checkbox" name="subjects" value="Mathematics">
+                  <span class="pill-label">📐 Mathematics & Logic</span>
+                </label>
+                <label class="pill-choice">
+                  <input type="checkbox" name="subjects" value="Statistics">
+                  <span class="pill-label">📊 Statistics & Probability</span>
+                </label>
+                <label class="pill-choice">
+                  <input type="checkbox" name="subjects" value="Physics">
+                  <span class="pill-label">⚛️ Physics</span>
+                </label>
+                <label class="pill-choice">
+                  <input type="checkbox" name="subjects" value="Electronics">
+                  <span class="pill-label">⚡ Electronics & Circuits</span>
+                </label>
+                <label class="pill-choice">
+                  <input type="checkbox" name="subjects" value="Graphic Design">
+                  <span class="pill-label">🎨 Art & Graphic Design</span>
+                </label>
+                <label class="pill-choice">
+                  <input type="checkbox" name="subjects" value="Business Studies">
+                  <span class="pill-label">💼 Commerce & Business</span>
+                </label>
+                <label class="pill-choice">
+                  <input type="checkbox" name="subjects" value="Economics">
+                  <span class="pill-label">📈 Economics & Finance</span>
+                </label>
+                <label class="pill-choice">
+                  <input type="checkbox" name="subjects" value="English & Communication">
+                  <span class="pill-label">🗣️ English & Communication</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Current Skills (Multi-Select Pills) -->
+            <div class="form-group form-full">
+              <label class="form-label">
+                <span>🛠️ Skills You Already Have or Are Learning</span>
+                <span style="font-weight: 400; font-size: 0.82rem; color: var(--text-muted);">(Select all that apply)</span>
+              </label>
+              <div class="pills-grid">
+                <label class="pill-choice">
+                  <input type="checkbox" name="skills" value="Python">
+                  <span class="pill-label">🐍 Python</span>
+                </label>
+                <label class="pill-choice">
+                  <input type="checkbox" name="skills" value="Java">
+                  <span class="pill-label">☕ Java</span>
+                </label>
+                <label class="pill-choice">
+                  <input type="checkbox" name="skills" value="C++">
+                  <span class="pill-label">⚙️ C++</span>
+                </label>
+                <label class="pill-choice">
+                  <input type="checkbox" name="skills" value="HTML & CSS">
+                  <span class="pill-label">🌐 HTML / CSS</span>
+                </label>
+                <label class="pill-choice">
+                  <input type="checkbox" name="skills" value="JavaScript">
+                  <span class="pill-label">⚡ JavaScript</span>
+                </label>
+                <label class="pill-choice">
+                  <input type="checkbox" name="skills" value="SQL">
+                  <span class="pill-label">🗄️ SQL & Databases</span>
+                </label>
+                <label class="pill-choice">
+                  <input type="checkbox" name="skills" value="UI Design & Figma">
+                  <span class="pill-label">🎨 UI/UX & Figma</span>
+                </label>
+                <label class="pill-choice">
+                  <input type="checkbox" name="skills" value="Linux & Networking">
+                  <span class="pill-label">🐧 Linux & Networks</span>
+                </label>
+                <label class="pill-choice">
+                  <input type="checkbox" name="skills" value="Robotics & Arduino">
+                  <span class="pill-label">🤖 Arduino & Microcontrollers</span>
+                </label>
+                <label class="pill-choice">
+                  <input type="checkbox" name="skills" value="Data Analysis">
+                  <span class="pill-label">📈 Data Analysis / Excel</span>
+                </label>
+                <label class="pill-choice">
+                  <input type="checkbox" name="skills" value="Public Speaking & Leadership">
+                  <span class="pill-label">🎙️ Public Speaking & Leadership</span>
+                </label>
+                <label class="pill-choice">
+                  <input type="checkbox" name="skills" value="Git & GitHub">
+                  <span class="pill-label">🐙 Git & GitHub</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Personal Interests (Multi-Select Pills) -->
+            <div class="form-group form-full">
+              <label class="form-label">
+                <span>💡 Personal Passions & Technical Interests</span>
+                <span style="font-weight: 400; font-size: 0.82rem; color: var(--text-muted);">(Select all that apply)</span>
+              </label>
+              <div class="pills-grid">
+                <label class="pill-choice">
+                  <input type="checkbox" name="interests" value="Artificial Intelligence & ML">
+                  <span class="pill-label">🤖 Artificial Intelligence & Neural Nets</span>
+                </label>
+                <label class="pill-choice">
+                  <input type="checkbox" name="interests" value="Web & App Building">
+                  <span class="pill-label">📱 Web & Mobile Application Building</span>
+                </label>
+                <label class="pill-choice">
+                  <input type="checkbox" name="interests" value="Cybersecurity & Ethical Hacking">
+                  <span class="pill-label">🛡️ Cybersecurity & Ethical Hacking</span>
+                </label>
+                <label class="pill-choice">
+                  <input type="checkbox" name="interests" value="Data Analytics & Trends">
+                  <span class="pill-label">📊 Big Data, Analytics & Predictive Trends</span>
+                </label>
+                <label class="pill-choice">
+                  <input type="checkbox" name="interests" value="Visual Design & Aesthetics">
+                  <span class="pill-label">✨ Visual Design, Aesthetics & UX</span>
+                </label>
+                <label class="pill-choice">
+                  <input type="checkbox" name="interests" value="Robotics & Hardware">
+                  <span class="pill-label">🔌 Hardware Gadgets, IoT & Robotics</span>
+                </label>
+                <label class="pill-choice">
+                  <input type="checkbox" name="interests" value="Startups & Venture Finance">
+                  <span class="pill-label">💼 Tech Startups, Strategy & Management</span>
+                </label>
+                <label class="pill-choice">
+                  <input type="checkbox" name="interests" value="Cloud Infrastructure">
+                  <span class="pill-label">☁️ Cloud Infrastructure & DevOps</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Preferred Career Field (Radio Cards) -->
+            <div class="form-group form-full">
+              <label class="form-label">
+                <span>🎯 Preferred Career Field</span>
+                <span style="font-weight: 400; font-size: 0.82rem; color: var(--text-muted);">(Provides targeted weighting boost)</span>
+              </label>
+              <div class="radio-card-grid">
+                <label class="radio-card">
+                  <input type="radio" name="preferredField" value="Software Development">
+                  <div class="radio-card-body">
+                    <span class="radio-card-icon">💻</span>
+                    <span class="radio-card-title">Software Developer</span>
+                  </div>
+                </label>
+
+                <label class="radio-card">
+                  <input type="radio" name="preferredField" value="Artificial Intelligence">
+                  <div class="radio-card-body">
+                    <span class="radio-card-icon">🤖</span>
+                    <span class="radio-card-title">AI Engineer</span>
+                  </div>
+                </label>
+
+                <label class="radio-card">
+                  <input type="radio" name="preferredField" value="Data Science">
+                  <div class="radio-card-body">
+                    <span class="radio-card-icon">📊</span>
+                    <span class="radio-card-title">Data Scientist</span>
+                  </div>
+                </label>
+
+                <label class="radio-card">
+                  <input type="radio" name="preferredField" value="Cybersecurity">
+                  <div class="radio-card-body">
+                    <span class="radio-card-icon">🛡️</span>
+                    <span class="radio-card-title">Cybersecurity Analyst</span>
+                  </div>
+                </label>
+
+                <label class="radio-card">
+                  <input type="radio" name="preferredField" value="Web Development">
+                  <div class="radio-card-body">
+                    <span class="radio-card-icon">🌐</span>
+                    <span class="radio-card-title">Web Developer</span>
+                  </div>
+                </label>
+
+                <label class="radio-card">
+                  <input type="radio" name="preferredField" value="Cloud Engineering">
+                  <div class="radio-card-body">
+                    <span class="radio-card-icon">☁️</span>
+                    <span class="radio-card-title">Cloud Engineer</span>
+                  </div>
+                </label>
+
+                <label class="radio-card">
+                  <input type="radio" name="preferredField" value="UI/UX Design">
+                  <div class="radio-card-body">
+                    <span class="radio-card-icon">🎨</span>
+                    <span class="radio-card-title">UI/UX Designer</span>
+                  </div>
+                </label>
+
+                <label class="radio-card">
+                  <input type="radio" name="preferredField" value="Electronics Engineering">
+                  <div class="radio-card-body">
+                    <span class="radio-card-icon">⚡</span>
+                    <span class="radio-card-title">Electronics Engineer</span>
+                  </div>
+                </label>
+
+                <label class="radio-card">
+                  <input type="radio" name="preferredField" value="Business & Entrepreneurship">
+                  <div class="radio-card-body">
+                    <span class="radio-card-icon">💼</span>
+                    <span class="radio-card-title">Business & Startups</span>
+                  </div>
+                </label>
+              </div>
+            </div>
+
+            <!-- Career Goal -->
+            <div class="form-group form-full">
+              <label for="career-goal" class="form-label">
+                <span>🎯 What is Your Ultimate Career Goal?</span>
+              </label>
+              <textarea 
+                id="career-goal" 
+                class="form-textarea" 
+                rows="3" 
+                placeholder="e.g. Build innovative software systems, lead a product design team, or launch a tech startup that solves sustainability challenges..."
+              ></textarea>
+              <span class="form-hint">Displayed on your student dashboard to keep you focused on your target.</span>
+            </div>
+
+          </div>
+
+          <!-- Form Actions -->
+          <div class="form-actions">
+            <div style="display: flex; gap: 0.6rem; flex-wrap: wrap;">
+              <button type="button" id="reset-profile-btn" class="btn btn-danger-outline">
+                <span>🔄</span> Reset Profile
+              </button>
+              <button type="button" class="btn btn-secondary" onclick="exportProfileJSON()">
+                <span>📥</span> Export JSON
+              </button>
+              <label class="btn btn-secondary" style="margin: 0; cursor: pointer;">
+                <span>📤</span> Import JSON
+                <input type="file" accept=".json" style="display: none;" onchange="importProfileJSON(this)">
+              </label>
+            </div>
+            <button type="submit" class="btn btn-primary btn-lg">
+              <span>💾</span> Save Profile & Continue to Assessment &rarr;
+            </button>
+          </div>
+
+        </form>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom" style="border-top: none; padding-top: 0;">
+        <div>&copy; 2026 One-Stop Personalized Career & Education Advisor. Student Profile Engine.</div>
+        <div>Stored securely in your local browser storage.</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Career Recommendations - One-Stop Career & Education Advisor</title>
+  <meta name="description" content="Personalized career recommendations generated from your student profile and assessment scores, complete with match scores, skill requirements, and learning paths.">
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="nav-container container">
+      <a href="index.html" class="brand">
+        <div class="brand-icon">🧭</div>
+        <div class="brand-title">
+          <span>CareerPath</span>
+          <span>One-Stop Advisor</span>
+        </div>
+      </a>
+
+      <ul class="nav-links" id="nav-links">
+        <li class="nav-item"><a href="index.html"><span>🏠</span> Home</a></li>
+        <li class="nav-item"><a href="profile.html"><span>👤</span> Student Profile</a></li>
+        <li class="nav-item"><a href="assessment.html"><span>📝</span> Career Assessment</a></li>
+        <li class="nav-item"><a href="recommendations.html" class="active"><span>🎯</span> Recommendations</a></li>
+        <li class="nav-item"><a href="roadmap.html"><span>🗺️</span> Roadmaps</a></li>
+        <li class="nav-item"><a href="dashboard.html"><span>📊</span> Dashboard</a></li>
+      </ul>
+
+      <div style="display: flex; align-items: center; gap: 0.6rem;">
+        <button class="btn-share-badge" onclick="openShareModal()" title="Get direct shareable link for any student">
+          <span>🔗</span> Share Link
+        </button>
+        <button class="btn-share-badge" onclick="openComparisonModal()" title="Compare any two career paths">
+          <span>⚖️</span> Compare
+        </button>
+        <span id="nav-user-badge" class="nav-user-badge">👤 Guest Student</span>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Toggle Navigation Menu">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="container" id="recommendations-container">
+      
+      <!-- Page Header -->
+      <div class="page-header">
+        <div class="page-badge">Step 3 of 4 • Algorithmic Results</div>
+        <h1 class="page-title">Personalized Career Recommendations</h1>
+        <p class="page-subtitle">
+          Based on your academic performance, chosen subjects, current skills, and answers from the 16-question aptitude assessment, here are your top recommended career pathways.
+        </p>
+
+        <!-- Quick Actions Toolbar -->
+        <div style="display: flex; justify-content: center; gap: 0.6rem; margin-top: 1.25rem; flex-wrap: wrap;">
+          <button type="button" class="btn btn-secondary btn-sm" onclick="openShareModal()">
+            <span>🔗</span> Direct Share Link
+          </button>
+          <button type="button" class="btn btn-secondary btn-sm" onclick="openComparisonModal()">
+            <span>⚖️</span> Compare Careers
+          </button>
+          <button type="button" class="btn btn-secondary btn-sm" onclick="exportProfileJSON()">
+            <span>📥</span> Export JSON
+          </button>
+          <button type="button" class="btn btn-secondary btn-sm" onclick="window.print()">
+            <span>🖨️</span> Print / PDF Report
+          </button>
+        </div>
+      </div>
+
+      <!-- Empty State Card (Visible if no assessment/profile yet) -->
+      <div id="rec-empty-state" class="state-empty-card" style="display: none;">
+        <div class="state-empty-icon">🎯</div>
+        <h2 class="state-empty-title">No Recommendations Generated Yet</h2>
+        <p class="state-empty-text">
+          To generate personalized career recommendations with calculated match scores, please complete your student profile and take the quick career assessment.
+        </p>
+        <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+          <a href="profile.html" class="btn btn-primary">
+            <span>👤</span> Setup Student Profile
+          </a>
+          <a href="assessment.html" class="btn btn-secondary">
+            <span>📝</span> Take Career Assessment
+          </a>
+        </div>
+      </div>
+
+      <!-- Top Recommendation Showcase (#1 Ranked Match) -->
+      <div id="top-recommendation-container"></div>
+
+      <!-- Secondary Recommendations Section -->
+      <div style="margin-top: 3.5rem;">
+        <div class="section-header" style="text-align: left; margin-bottom: 1.5rem;">
+          <h2 style="font-size: 1.6rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.25rem;">
+            Alternative Strong Career Matches
+          </h2>
+          <p style="color: var(--text-secondary); font-size: 0.95rem;">
+            Explore other complementary high-scoring career tracks aligned with your strengths.
+          </p>
+        </div>
+
+        <div id="secondary-recommendations-grid" class="recommendations-grid"></div>
+      </div>
+
+      <!-- Explanation & Methodology Card for College Demonstrations -->
+      <div class="card" style="margin-top: 3.5rem; background: var(--bg-subtle); border-left: 4px solid var(--primary);">
+        <h3 style="font-size: 1.15rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+          <span>💡</span> How Your Match Scores Were Calculated
+        </h3>
+        <p style="font-size: 0.92rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 1rem;">
+          Our recommendation system employs a multi-factor weighting algorithm:
+        </p>
+        <ul style="padding-left: 1.5rem; font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6;">
+          <li><strong>Academic & Stream Affinity (~40%):</strong> Evaluates your current branch, percentage/CGPA, and directly scores careers matching your favorite academic subjects, existing skills, and preferred fields.</li>
+          <li><strong>Situational Aptitude Assessment (~60%):</strong> Evaluates your answers across 8 specialized domains (Programming, AI, Cybersecurity, Data Science, Electronics, Business, UX Design, and Communication).</li>
+          <li><strong>Normalization & Ranking:</strong> Scores are dynamically scaled into an intuitive 45% - 98% percentage range and ranked to highlight your highest-potential pathway.</li>
+        </ul>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom" style="border-top: none; padding-top: 0;">
+        <div>&copy; 2026 One-Stop Personalized Career & Education Advisor. Recommendation Engine.</div>
+        <div>Calculated on-device in real time.</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

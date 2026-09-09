@@ -1,0 +1,8 @@
+*.pfx
+*.pem
+*.log
+node_modules
+Thumbs.db
+.DS_Store
+node -c js.js
+git_init.js

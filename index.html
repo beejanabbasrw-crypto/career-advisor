@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>One-Stop Personalized Career & Education Advisor</title>
+  <meta name="description" content="Discover suitable career options and education paths based on your interests, skills, academic performance, favorite subjects, and career goals.">
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Cinematic Website Launch Animation Overlay -->
+  <div id="launch-overlay" class="launch-overlay" aria-hidden="true">
+    <canvas id="launch-starfield" class="launch-starfield"></canvas>
+    
+    <!-- Top Launch HUD Controls -->
+    <div class="launch-top-bar">
+      <div class="launch-mission-tag">
+        <span class="mission-dot"></span> MISSION: CAREER ELEVATION 2026
+      </div>
+      <div class="launch-controls">
+        <button type="button" id="launch-sound-toggle" class="launch-hud-btn" onclick="toggleLaunchAudio()" title="Toggle Launch Sound Audio Synthesizer">
+          <span id="launch-sound-icon">🔇</span> Sound: <span id="launch-sound-state">OFF</span>
+        </button>
+        <button type="button" class="launch-hud-btn launch-skip-btn" onclick="skipWebsiteLaunchAnimation()">
+          <span>⚡ Skip Launch</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Central Launchpad Core -->
+    <div class="launch-core">
+      <!-- Orbital Telemetry Rings -->
+      <div class="launch-rings-wrapper">
+        <div class="launch-ring outer-ring"></div>
+        <div class="launch-ring middle-ring"></div>
+        <div class="launch-ring inner-ring"></div>
+        <div class="launch-radar-sweep"></div>
+        
+        <!-- Center Stage Rocket Vessel -->
+        <div class="launch-vessel-container" id="launch-vessel">
+          <div class="launch-rocket-silhouette">
+            <svg class="rocket-svg" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="bodyGrad" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stop-color="#ffffff"/>
+                  <stop offset="55%" stop-color="#e0e7ff"/>
+                  <stop offset="100%" stop-color="#818cf8"/>
+                </linearGradient>
+                <linearGradient id="finGrad" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stop-color="#4f46e5"/>
+                  <stop offset="100%" stop-color="#312e81"/>
+                </linearGradient>
+                <linearGradient id="glassGrad" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stop-color="#38bdf8"/>
+                  <stop offset="100%" stop-color="#0284c7"/>
+                </linearGradient>
+              </defs>
+              <path d="M32 4 C32 4 46 16 46 38 L18 38 C18 16 32 4 32 4 Z" fill="url(#bodyGrad)"/>
+              <path d="M18 30 L8 44 C8 44 14 44 18 40 Z" fill="url(#finGrad)"/>
+              <path d="M46 30 L56 44 C56 44 50 44 46 40 Z" fill="url(#finGrad)"/>
+              <path d="M25 38 L23 44 L41 44 L39 38 Z" fill="#64748b"/>
+              <circle cx="32" cy="22" r="7" fill="#1e1b4b" stroke="#ffffff" stroke-width="2"/>
+              <circle cx="32" cy="22" r="5" fill="url(#glassGrad)"/>
+              <circle cx="30" cy="20" r="1.5" fill="#ffffff" opacity="0.8"/>
+            </svg>
+            <div class="thruster-exhaust">
+              <div class="flame-core"></div>
+              <div class="flame-outer"></div>
+              <div class="thruster-glow"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Launch Status & Telemetry HUD -->
+      <div class="launch-telemetry">
+        <div class="launch-brand-title">
+          <span class="launch-brand-sub">NEXT-GEN STUDENT INTELLIGENCE</span>
+          <h2 class="launch-headline">CAREER ADVISOR</h2>
+        </div>
+
+        <!-- Live Dynamic Status Readout -->
+        <div class="launch-status-wrapper">
+          <span class="launch-status-prefix">&gt;</span>
+          <span id="launch-status-text" class="launch-status-text">INITIALIZING ADVISOR LAUNCH CORE...</span>
+        </div>
+
+        <!-- Animated Progress Track -->
+        <div class="launch-progress-track">
+          <div id="launch-progress-bar" class="launch-progress-fill"></div>
+        </div>
+
+        <!-- Real-time Telemetry Metrics -->
+        <div class="launch-metrics-row">
+          <div class="launch-metric-item">
+            <span>STATUS:</span>
+            <span id="launch-metric-status" class="metric-val">CALIBRATING</span>
+          </div>
+          <div class="launch-metric-item">
+            <span>CAREERS:</span>
+            <span class="metric-val">9 PATHWAYS ACTIVE</span>
+          </div>
+          <div class="launch-metric-item">
+            <span>READINESS:</span>
+            <span id="launch-metric-percent" class="metric-val">0%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lens Flare Flash Overlay -->
+    <div id="launch-flash-overlay" class="launch-flash-overlay"></div>
+  </div>
+
+  <!-- Celebratory Confetti Canvas -->
+  <canvas id="launch-confetti-canvas" class="launch-confetti-canvas"></canvas>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="nav-container container">
+      <a href="index.html" class="brand">
+        <div class="brand-icon">🧭</div>
+        <div class="brand-title">
+          <span>CareerPath</span>
+          <span>One-Stop Advisor</span>
+        </div>
+      </a>
+
+      <ul class="nav-links" id="nav-links">
+        <li class="nav-item"><a href="index.html" class="active"><span>🏠</span> Home</a></li>
+        <li class="nav-item"><a href="profile.html"><span>👤</span> Student Profile</a></li>
+        <li class="nav-item"><a href="assessment.html"><span>📝</span> Career Assessment</a></li>
+        <li class="nav-item"><a href="recommendations.html"><span>🎯</span> Recommendations</a></li>
+        <li class="nav-item"><a href="roadmap.html"><span>🗺️</span> Roadmaps</a></li>
+        <li class="nav-item"><a href="dashboard.html"><span>📊</span> Dashboard</a></li>
+      </ul>
+
+      <div style="display: flex; align-items: center; gap: 0.6rem;">
+        <button class="btn-share-badge btn-launch-badge" onclick="startWebsiteLaunchAnimation(true)" title="Replay Website Launch Animation">
+          <span>🚀</span> Launch
+        </button>
+        <button class="btn-share-badge" onclick="openShareModal()" title="Get direct shareable link for any student">
+          <span>🔗</span> Share Link
+        </button>
+        <button class="btn-share-badge" onclick="openComparisonModal()" title="Compare any two career paths">
+          <span>⚖️</span> Compare
+        </button>
+        <span id="nav-user-badge" class="nav-user-badge">👤 Guest Student</span>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Toggle Navigation Menu">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    
+    <!-- Hero Section -->
+    <section class="hero container">
+      <div class="hero-glow"></div>
+      <div class="hero-content">
+        <div class="page-badge">✨ AI-Powered Educational Advisory Platform</div>
+        <h1 class="hero-title">
+          One-Stop Personalized <br>
+          <span class="gradient-text">Career & Education Advisor</span>
+        </h1>
+        <p class="hero-desc">
+          Empowering students to unlock their true potential. Discover top-fit career options and customized step-by-step education roadmaps tailored to your unique skills, favorite subjects, academic performance, and personal aspirations.
+        </p>
+
+        <div class="hero-actions">
+          <button type="button" class="btn btn-primary btn-lg btn-launch-hero" onclick="startWebsiteLaunchAnimation(true)">
+            <span>🚀</span> Launch Experience
+          </button>
+          <a href="profile.html" class="btn btn-primary btn-lg">
+            <span>👤</span> Get Started Now
+          </a>
+          <a href="assessment.html" class="btn btn-secondary btn-lg">
+            <span>⚡</span> Take Quick Assessment
+          </a>
+          <a href="roadmap.html" class="btn btn-outline-primary btn-lg">
+            <span>🗺️</span> Explore Roadmaps
+          </a>
+          <button type="button" class="btn btn-secondary btn-lg" onclick="openComparisonModal()">
+            <span>⚖️</span> Compare Careers
+          </button>
+        </div>
+
+        <!-- Metric Highlights -->
+        <div class="hero-stats-row">
+          <div class="stat-box">
+            <div class="stat-number">9+</div>
+            <div class="stat-label">High-Growth Career Paths</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-number">16</div>
+            <div class="stat-label">Multi-Domain Aptitude Questions</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-number">6-Stage</div>
+            <div class="stat-label">School to Career Roadmaps</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-number">100%</div>
+            <div class="stat-label">Privacy (LocalStorage Client-Side)</div>
+          </div>
+        </div>
+
+        <!-- Quick 1-Click Demo Personas -->
+        <div class="persona-chips-bar" style="margin-top: 2.25rem; text-align: left;">
+          <div class="persona-chips-title">
+            <span>⚡ Instant Demo Personas (Click to test full platform in 1 second):</span>
+          </div>
+          <div class="persona-chips-grid">
+            <button type="button" class="persona-btn" onclick="loadDemoPersona('ai')">
+              <span>🤖</span> Anya Sharma (AI & Data • 91%)
+            </button>
+            <button type="button" class="persona-btn" onclick="loadDemoPersona('software')">
+              <span>💻</span> David Chen (Full Stack • 86%)
+            </button>
+            <button type="button" class="persona-btn" onclick="loadDemoPersona('design')">
+              <span>🎨</span> Elena Rostova (UI/UX Design • 84%)
+            </button>
+            <button type="button" class="persona-btn" onclick="loadDemoPersona('cyber')">
+              <span>🛡️</span> Marcus Vance (Cybersecurity • 85%)
+            </button>
+            <button type="button" class="persona-btn" onclick="loadDemoPersona('business')">
+              <span>💼</span> Rohan Patel (Tech Startups • 87%)
+            </button>
+          </div>
+        </div>
+
+        <!-- Direct Share Link Banner -->
+        <div class="share-banner-card" style="margin-top: 1.5rem; text-align: left;">
+          <div>
+            <h4 style="font-size: 1.05rem; font-weight: 700; color: var(--primary-dark); margin-bottom: 0.25rem; display: flex; align-items: center; gap: 0.4rem;">
+              <span>🔗</span> Universal Direct Link For All Students
+            </h4>
+            <p style="font-size: 0.88rem; color: var(--text-secondary); margin: 0;">
+              Share your customized roadmap, scores, and skills with classmates, mentors, or teachers at any time. No server login or database required!
+            </p>
+          </div>
+          <button type="button" class="btn btn-primary" onclick="openShareModal()">
+            <span>🔗</span> Open Share & Direct Link Tool
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works Flow -->
+    <section class="section" style="background: white; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);">
+      <div class="container">
+        <div class="section-header">
+          <div class="page-badge">Step-by-Step Guidance</div>
+          <h2 class="section-title">How The One-Stop Advisor Works</h2>
+          <p class="section-subtitle">A seamless four-step journey from self-discovery to confident career execution.</p>
+        </div>
+
+        <div class="how-it-works-grid">
+          <div class="step-card">
+            <div class="step-num">1</div>
+            <div class="step-icon">📋</div>
+            <h3 class="step-title">Create Profile</h3>
+            <p class="step-desc">Share your current academic grade, branch/stream, favorite subjects, and existing skill sets.</p>
+          </div>
+
+          <div class="step-card">
+            <div class="step-num">2</div>
+            <div class="step-icon">🧠</div>
+            <h3 class="step-title">Career Assessment</h3>
+            <p class="step-desc">Complete 16 situational questions testing your affinity for software, AI, hardware, design, and business.</p>
+          </div>
+
+          <div class="step-card">
+            <div class="step-num">3</div>
+            <div class="step-icon">🎯</div>
+            <h3 class="step-title">Smart Match</h3>
+            <p class="step-desc">Receive algorithmic match percentages, customized rationale, and recommended learning pathways.</p>
+          </div>
+
+          <div class="step-card">
+            <div class="step-num">4</div>
+            <div class="step-icon">🏆</div>
+            <h3 class="step-title">Track & Master</h3>
+            <p class="step-desc">Follow the step-by-step education roadmap and check off technical skills right in your dashboard.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Core Features Grid -->
+    <section class="section container">
+      <div class="section-header">
+        <div class="page-badge">Platform Capabilities</div>
+        <h2 class="section-title">Engineered Specifically For Students</h2>
+        <p class="section-subtitle">Built with modern client-side technology to deliver intelligent, actionable education planning.</p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon-wrapper" style="background: var(--primary-light); color: var(--primary);">👤</div>
+          <h3 class="feature-title">Student Profiling</h3>
+          <p class="feature-text">Captures education level, CGPA/percentage, technical competencies, favorite academic subjects, and personal ambitions with instant validation.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon-wrapper" style="background: var(--secondary-light); color: var(--secondary);">🔬</div>
+          <h3 class="feature-title">Multi-Domain Assessment</h3>
+          <p class="feature-text">Evaluates 8 critical career domains: Programming, AI, Cybersecurity, Data Science, Electronics, Business, UX Design, and Communication.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon-wrapper" style="background: var(--accent-light); color: var(--accent);">📊</div>
+          <h3 class="feature-title">Dynamic Recommendation Engine</h3>
+          <p class="feature-text">Applies a multi-factor weighting algorithm that cross-references profile attributes with assessment answers to calculate true affinity scores.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon-wrapper" style="background: var(--success-light); color: #065f46;">🗺️</div>
+          <h3 class="feature-title">Adaptive Education Roadmap</h3>
+          <p class="feature-text">Visualizes the 6-stage progression: School &rarr; Undergraduate Degree &rarr; Core Skills &rarr; Projects &rarr; Internship &rarr; Employment.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon-wrapper" style="background: var(--warning-light); color: #b45309;">✅</div>
+          <h3 class="feature-title">Interactive Skill Tracker</h3>
+          <p class="feature-text">Mark required technical competencies as completed, view real-time readiness percentages, and maintain your progress effortlessly.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon-wrapper" style="background: #e0e7ff; color: #3730a3;">💾</div>
+          <h3 class="feature-title">Zero Backend LocalStorage</h3>
+          <p class="feature-text">No database or server required. All profile records, quiz answers, and skill checklists persist in your browser's LocalStorage.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Career Pathways Showcase -->
+    <section class="section" style="background: #f8fafc; border-top: 1px solid var(--border-color);">
+      <div class="container">
+        <div class="section-header">
+          <div class="page-badge">Explore Possibilities</div>
+          <h2 class="section-title">9 Supported High-Impact Career Pathways</h2>
+          <p class="section-subtitle">Every pathway features a dedicated 6-stage education guide, skill list, and curriculum recommendations.</p>
+        </div>
+
+        <div class="recommendations-grid">
+          <div class="rec-card">
+            <div class="rec-card-header">
+              <div class="rec-card-title-wrap">
+                <div class="rec-card-icon">💻</div>
+                <div>
+                  <h3 class="rec-card-name">Software Developer</h3>
+                  <span style="font-size: 0.8rem; color: var(--text-muted);">Engineering & Systems</span>
+                </div>
+              </div>
+              <span class="rec-score-pill">High Growth</span>
+            </div>
+            <p class="rec-card-reason">Build scalable software, backend services, and robust computer applications that power modern industries.</p>
+            <div class="rec-card-section-title">Key Skills</div>
+            <div class="tag-cloud rec-card-tags">
+              <span class="tag-item light">DSA</span>
+              <span class="tag-item light">Python</span>
+              <span class="tag-item light">Java</span>
+              <span class="tag-item light">System Design</span>
+              <span class="tag-item light">SQL</span>
+            </div>
+            <a href="roadmap.html?career=software-developer" class="btn btn-outline-primary btn-sm">Explore Pathway &rarr;</a>
+          </div>
+
+          <div class="rec-card">
+            <div class="rec-card-header">
+              <div class="rec-card-title-wrap">
+                <div class="rec-card-icon">🤖</div>
+                <div>
+                  <h3 class="rec-card-name">AI Engineer</h3>
+                  <span style="font-size: 0.8rem; color: var(--text-muted);">Machine Intelligence</span>
+                </div>
+              </div>
+              <span class="rec-score-pill">Top Demand</span>
+            </div>
+            <p class="rec-card-reason">Develop machine learning models, neural networks, computer vision, and intelligent autonomous agents.</p>
+            <div class="rec-card-section-title">Key Skills</div>
+            <div class="tag-cloud rec-card-tags">
+              <span class="tag-item light">PyTorch</span>
+              <span class="tag-item light">TensorFlow</span>
+              <span class="tag-item light">Linear Algebra</span>
+              <span class="tag-item light">NLP</span>
+              <span class="tag-item light">MLOps</span>
+            </div>
+            <a href="roadmap.html?career=ai-engineer" class="btn btn-outline-primary btn-sm">Explore Pathway &rarr;</a>
+          </div>
+
+          <div class="rec-card">
+            <div class="rec-card-header">
+              <div class="rec-card-title-wrap">
+                <div class="rec-card-icon">📊</div>
+                <div>
+                  <h3 class="rec-card-name">Data Scientist</h3>
+                  <span style="font-size: 0.8rem; color: var(--text-muted);">Analytics & Prediction</span>
+                </div>
+              </div>
+              <span class="rec-score-pill">High Growth</span>
+            </div>
+            <p class="rec-card-reason">Transform massive datasets into predictive insights, business intelligence, and statistical models.</p>
+            <div class="rec-card-section-title">Key Skills</div>
+            <div class="tag-cloud rec-card-tags">
+              <span class="tag-item light">Python</span>
+              <span class="tag-item light">Statistics</span>
+              <span class="tag-item light">SQL</span>
+              <span class="tag-item light">Pandas</span>
+              <span class="tag-item light">Power BI</span>
+            </div>
+            <a href="roadmap.html?career=data-scientist" class="btn btn-outline-primary btn-sm">Explore Pathway &rarr;</a>
+          </div>
+
+          <div class="rec-card">
+            <div class="rec-card-header">
+              <div class="rec-card-title-wrap">
+                <div class="rec-card-icon">🛡️</div>
+                <div>
+                  <h3 class="rec-card-name">Cybersecurity Analyst</h3>
+                  <span style="font-size: 0.8rem; color: var(--text-muted);">Security & Defense</span>
+                </div>
+              </div>
+              <span class="rec-score-pill">Critical Need</span>
+            </div>
+            <p class="rec-card-reason">Defend networks, systems, and enterprise data against cyberattacks, malware, and penetration vectors.</p>
+            <div class="rec-card-section-title">Key Skills</div>
+            <div class="tag-cloud rec-card-tags">
+              <span class="tag-item light">Network Security</span>
+              <span class="tag-item light">Linux</span>
+              <span class="tag-item light">Ethical Hacking</span>
+              <span class="tag-item light">Wireshark</span>
+              <span class="tag-item light">SIEM</span>
+            </div>
+            <a href="roadmap.html?career=cybersecurity-analyst" class="btn btn-outline-primary btn-sm">Explore Pathway &rarr;</a>
+          </div>
+
+          <div class="rec-card">
+            <div class="rec-card-header">
+              <div class="rec-card-title-wrap">
+                <div class="rec-card-icon">🌐</div>
+                <div>
+                  <h3 class="rec-card-name">Web Developer</h3>
+                  <span style="font-size: 0.8rem; color: var(--text-muted);">Frontend & Full Stack</span>
+                </div>
+              </div>
+              <span class="rec-score-pill">High Demand</span>
+            </div>
+            <p class="rec-card-reason">Build engaging web interfaces, responsive client experiences, and full-stack web applications.</p>
+            <div class="rec-card-section-title">Key Skills</div>
+            <div class="tag-cloud rec-card-tags">
+              <span class="tag-item light">HTML/CSS</span>
+              <span class="tag-item light">JavaScript</span>
+              <span class="tag-item light">React</span>
+              <span class="tag-item light">Node.js</span>
+              <span class="tag-item light">REST APIs</span>
+            </div>
+            <a href="roadmap.html?career=web-developer" class="btn btn-outline-primary btn-sm">Explore Pathway &rarr;</a>
+          </div>
+
+          <div class="rec-card">
+            <div class="rec-card-header">
+              <div class="rec-card-title-wrap">
+                <div class="rec-card-icon">☁️</div>
+                <div>
+                  <h3 class="rec-card-name">Cloud Engineer</h3>
+                  <span style="font-size: 0.8rem; color: var(--text-muted);">Infrastructure & DevOps</span>
+                </div>
+              </div>
+              <span class="rec-score-pill">High Growth</span>
+            </div>
+            <p class="rec-card-reason">Architect resilient cloud environments, deploy containerized microservices, and automate CI/CD pipelines.</p>
+            <div class="rec-card-section-title">Key Skills</div>
+            <div class="tag-cloud rec-card-tags">
+              <span class="tag-item light">AWS / Azure</span>
+              <span class="tag-item light">Docker</span>
+              <span class="tag-item light">Kubernetes</span>
+              <span class="tag-item light">Linux</span>
+              <span class="tag-item light">Terraform</span>
+            </div>
+            <a href="roadmap.html?career=cloud-engineer" class="btn btn-outline-primary btn-sm">Explore Pathway &rarr;</a>
+          </div>
+
+          <div class="rec-card">
+            <div class="rec-card-header">
+              <div class="rec-card-title-wrap">
+                <div class="rec-card-icon">🎨</div>
+                <div>
+                  <h3 class="rec-card-name">UI/UX Designer</h3>
+                  <span style="font-size: 0.8rem; color: var(--text-muted);">Design & Product</span>
+                </div>
+              </div>
+              <span class="rec-score-pill">Creative & Tech</span>
+            </div>
+            <p class="rec-card-reason">Design intuitive digital interfaces, run usability tests, craft design systems, and elevate user satisfaction.</p>
+            <div class="rec-card-section-title">Key Skills</div>
+            <div class="tag-cloud rec-card-tags">
+              <span class="tag-item light">Figma</span>
+              <span class="tag-item light">Wireframing</span>
+              <span class="tag-item light">User Research</span>
+              <span class="tag-item light">Prototyping</span>
+              <span class="tag-item light">Design Systems</span>
+            </div>
+            <a href="roadmap.html?career=ui-ux-designer" class="btn btn-outline-primary btn-sm">Explore Pathway &rarr;</a>
+          </div>
+
+          <div class="rec-card">
+            <div class="rec-card-header">
+              <div class="rec-card-title-wrap">
+                <div class="rec-card-icon">⚡</div>
+                <div>
+                  <h3 class="rec-card-name">Electronics Engineer</h3>
+                  <span style="font-size: 0.8rem; color: var(--text-muted);">Hardware & Embedded</span>
+                </div>
+              </div>
+              <span class="rec-score-pill">Core Engineering</span>
+            </div>
+            <p class="rec-card-reason">Design circuit boards, program microcontrollers, create IoT devices, and bridge software with physical hardware.</p>
+            <div class="rec-card-section-title">Key Skills</div>
+            <div class="tag-cloud rec-card-tags">
+              <span class="tag-item light">Embedded C/C++</span>
+              <span class="tag-item light">PCB Design</span>
+              <span class="tag-item light">Microcontrollers</span>
+              <span class="tag-item light">IoT Protocols</span>
+              <span class="tag-item light">Circuit Analysis</span>
+            </div>
+            <a href="roadmap.html?career=electronics-engineer" class="btn btn-outline-primary btn-sm">Explore Pathway &rarr;</a>
+          </div>
+
+          <div class="rec-card">
+            <div class="rec-card-header">
+              <div class="rec-card-title-wrap">
+                <div class="rec-card-icon">💼</div>
+                <div>
+                  <h3 class="rec-card-name">Business & Entrepreneurship</h3>
+                  <span style="font-size: 0.8rem; color: var(--text-muted);">Strategy & Ventures</span>
+                </div>
+              </div>
+              <span class="rec-score-pill">Leadership</span>
+            </div>
+            <p class="rec-card-reason">Lead innovative technology startups, identify market opportunities, raise capital, and scale commercial ventures.</p>
+            <div class="rec-card-section-title">Key Skills</div>
+            <div class="tag-cloud rec-card-tags">
+              <span class="tag-item light">Business Modeling</span>
+              <span class="tag-item light">Financial Planning</span>
+              <span class="tag-item light">Product Management</span>
+              <span class="tag-item light">Market Research</span>
+              <span class="tag-item light">Leadership</span>
+            </div>
+            <a href="roadmap.html?career=business-entrepreneurship" class="btn btn-outline-primary btn-sm">Explore Pathway &rarr;</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Call to Action Banner -->
+    <section class="container" style="margin-top: 3.5rem;">
+      <div class="card" style="background: linear-gradient(135deg, var(--primary-dark), #1e1b4b); color: white; padding: 3rem; text-align: center; border-radius: var(--radius-xl); box-shadow: var(--shadow-xl);">
+        <h2 style="font-size: 2.25rem; font-weight: 800; margin-bottom: 0.75rem; color: white;">Ready to Discover Your Best Career Path?</h2>
+        <p style="font-size: 1.1rem; color: #c7d2fe; max-width: 620px; margin: 0 auto 2rem; line-height: 1.6;">
+          Take just 3 minutes to input your student details and answer 16 aptitude questions. Get personalized career recommendations and custom education roadmaps immediately.
+        </p>
+        <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+          <a href="profile.html" class="btn btn-success btn-lg">
+            <span>🚀</span> Start Student Profile
+          </a>
+          <a href="dashboard.html" class="btn btn-secondary btn-lg">
+            <span>📊</span> View Student Dashboard
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="brand">
+            <div class="brand-icon">🧭</div>
+            <div class="brand-title">
+              <span>CareerPath</span>
+              <span>One-Stop Advisor</span>
+            </div>
+          </a>
+          <p>
+            An intelligent, student-centric academic advisory platform helping learners navigate career choices, skill mastery, and educational roadmaps.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="footer-heading">Platform Pages</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Home Overview</a></li>
+            <li><a href="profile.html">Student Profile</a></li>
+            <li><a href="assessment.html">Career Assessment</a></li>
+            <li><a href="recommendations.html">Recommendations</a></li>
+            <li><a href="roadmap.html">Education & Skills Roadmap</a></li>
+            <li><a href="dashboard.html">Student Dashboard</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-heading">Career Tracks</h4>
+          <ul class="footer-links">
+            <li><a href="roadmap.html?career=software-developer">Software Developer</a></li>
+            <li><a href="roadmap.html?career=ai-engineer">AI Engineer</a></li>
+            <li><a href="roadmap.html?career=data-scientist">Data Scientist</a></li>
+            <li><a href="roadmap.html?career=cybersecurity-analyst">Cybersecurity Analyst</a></li>
+            <li><a href="roadmap.html?career=web-developer">Web Developer</a></li>
+            <li><a href="roadmap.html?career=cloud-engineer">Cloud Engineer</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-heading">Technical Specs</h4>
+          <ul class="footer-links">
+            <li><a href="#">HTML5 Semantic Markup</a></li>
+            <li><a href="#">CSS3 Flexbox & CSS Grid</a></li>
+            <li><a href="#">Vanilla ES6+ JavaScript</a></li>
+            <li><a href="#">LocalStorage Persistence</a></li>
+            <li><a href="#">Zero Server Dependencies</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>&copy; 2026 One-Stop Personalized Career & Education Advisor. Built for Academic & Career Excellence.</div>
+        <div style="display: flex; gap: 1rem;">
+          <span>Client-Side Architecture</span>
+          <span>•</span>
+          <span>No Frameworks</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
