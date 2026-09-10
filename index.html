@@ -12,113 +12,6 @@
 </head>
 <body>
 
-  <!-- Cinematic Website Launch Animation Overlay -->
-  <div id="launch-overlay" class="launch-overlay" aria-hidden="true">
-    <canvas id="launch-starfield" class="launch-starfield"></canvas>
-    
-    <!-- Top Launch HUD Controls -->
-    <div class="launch-top-bar">
-      <div class="launch-mission-tag">
-        <span class="mission-dot"></span> MISSION: CAREER ELEVATION 2026
-      </div>
-      <div class="launch-controls">
-        <button type="button" id="launch-sound-toggle" class="launch-hud-btn" onclick="toggleLaunchAudio()" title="Toggle Launch Sound Audio Synthesizer">
-          <span id="launch-sound-icon">🔇</span> Sound: <span id="launch-sound-state">OFF</span>
-        </button>
-        <button type="button" class="launch-hud-btn launch-skip-btn" onclick="skipWebsiteLaunchAnimation()">
-          <span>⚡ Skip Launch</span>
-        </button>
-      </div>
-    </div>
-
-    <!-- Central Launchpad Core -->
-    <div class="launch-core">
-      <!-- Orbital Telemetry Rings -->
-      <div class="launch-rings-wrapper">
-        <div class="launch-ring outer-ring"></div>
-        <div class="launch-ring middle-ring"></div>
-        <div class="launch-ring inner-ring"></div>
-        <div class="launch-radar-sweep"></div>
-        
-        <!-- Center Stage Rocket Vessel -->
-        <div class="launch-vessel-container" id="launch-vessel">
-          <div class="launch-rocket-silhouette">
-            <svg class="rocket-svg" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <linearGradient id="bodyGrad" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
-                  <stop offset="0%" stop-color="#ffffff"/>
-                  <stop offset="55%" stop-color="#e0e7ff"/>
-                  <stop offset="100%" stop-color="#818cf8"/>
-                </linearGradient>
-                <linearGradient id="finGrad" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
-                  <stop offset="0%" stop-color="#4f46e5"/>
-                  <stop offset="100%" stop-color="#312e81"/>
-                </linearGradient>
-                <linearGradient id="glassGrad" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
-                  <stop offset="0%" stop-color="#38bdf8"/>
-                  <stop offset="100%" stop-color="#0284c7"/>
-                </linearGradient>
-              </defs>
-              <path d="M32 4 C32 4 46 16 46 38 L18 38 C18 16 32 4 32 4 Z" fill="url(#bodyGrad)"/>
-              <path d="M18 30 L8 44 C8 44 14 44 18 40 Z" fill="url(#finGrad)"/>
-              <path d="M46 30 L56 44 C56 44 50 44 46 40 Z" fill="url(#finGrad)"/>
-              <path d="M25 38 L23 44 L41 44 L39 38 Z" fill="#64748b"/>
-              <circle cx="32" cy="22" r="7" fill="#1e1b4b" stroke="#ffffff" stroke-width="2"/>
-              <circle cx="32" cy="22" r="5" fill="url(#glassGrad)"/>
-              <circle cx="30" cy="20" r="1.5" fill="#ffffff" opacity="0.8"/>
-            </svg>
-            <div class="thruster-exhaust">
-              <div class="flame-core"></div>
-              <div class="flame-outer"></div>
-              <div class="thruster-glow"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Launch Status & Telemetry HUD -->
-      <div class="launch-telemetry">
-        <div class="launch-brand-title">
-          <span class="launch-brand-sub">NEXT-GEN STUDENT INTELLIGENCE</span>
-          <h2 class="launch-headline">CAREER ADVISOR</h2>
-        </div>
-
-        <!-- Live Dynamic Status Readout -->
-        <div class="launch-status-wrapper">
-          <span class="launch-status-prefix">&gt;</span>
-          <span id="launch-status-text" class="launch-status-text">INITIALIZING ADVISOR LAUNCH CORE...</span>
-        </div>
-
-        <!-- Animated Progress Track -->
-        <div class="launch-progress-track">
-          <div id="launch-progress-bar" class="launch-progress-fill"></div>
-        </div>
-
-        <!-- Real-time Telemetry Metrics -->
-        <div class="launch-metrics-row">
-          <div class="launch-metric-item">
-            <span>STATUS:</span>
-            <span id="launch-metric-status" class="metric-val">CALIBRATING</span>
-          </div>
-          <div class="launch-metric-item">
-            <span>CAREERS:</span>
-            <span class="metric-val">9 PATHWAYS ACTIVE</span>
-          </div>
-          <div class="launch-metric-item">
-            <span>READINESS:</span>
-            <span id="launch-metric-percent" class="metric-val">0%</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Lens Flare Flash Overlay -->
-    <div id="launch-flash-overlay" class="launch-flash-overlay"></div>
-  </div>
-
-  <!-- Celebratory Confetti Canvas -->
-  <canvas id="launch-confetti-canvas" class="launch-confetti-canvas"></canvas>
-
   <!-- Navigation Bar -->
   <header class="navbar">
     <div class="nav-container container">
@@ -140,9 +33,6 @@
       </ul>
 
       <div style="display: flex; align-items: center; gap: 0.6rem;">
-        <button class="btn-share-badge btn-launch-badge" onclick="startWebsiteLaunchAnimation(true)" title="Replay Website Launch Animation">
-          <span>🚀</span> Launch
-        </button>
         <button class="btn-share-badge" onclick="openShareModal()" title="Get direct shareable link for any student">
           <span>🔗</span> Share Link
         </button>
@@ -162,7 +52,7 @@
     <section class="hero container">
       <div class="hero-glow"></div>
       <div class="hero-content">
-        <div class="page-badge">✨ AI-Powered Educational Advisory Platform</div>
+        <div class="page-badge">🎓 Personalized Education & Career Planning Platform</div>
         <h1 class="hero-title">
           One-Stop Personalized <br>
           <span class="gradient-text">Career & Education Advisor</span>
@@ -172,9 +62,6 @@
         </p>
 
         <div class="hero-actions">
-          <button type="button" class="btn btn-primary btn-lg btn-launch-hero" onclick="startWebsiteLaunchAnimation(true)">
-            <span>🚀</span> Launch Experience
-          </button>
           <a href="profile.html" class="btn btn-primary btn-lg">
             <span>👤</span> Get Started Now
           </a>
@@ -196,6 +83,10 @@
             <div class="stat-label">High-Growth Career Paths</div>
           </div>
           <div class="stat-box">
+            <div class="stat-number">28+</div>
+            <div class="stat-label">Academic Branches & Streams</div>
+          </div>
+          <div class="stat-box">
             <div class="stat-number">16</div>
             <div class="stat-label">Multi-Domain Aptitude Questions</div>
           </div>
@@ -203,32 +94,40 @@
             <div class="stat-number">6-Stage</div>
             <div class="stat-label">School to Career Roadmaps</div>
           </div>
-          <div class="stat-box">
-            <div class="stat-number">100%</div>
-            <div class="stat-label">Privacy (LocalStorage Client-Side)</div>
-          </div>
         </div>
 
         <!-- Quick 1-Click Demo Personas -->
         <div class="persona-chips-bar" style="margin-top: 2.25rem; text-align: left;">
           <div class="persona-chips-title">
-            <span>⚡ Instant Demo Personas (Click to test full platform in 1 second):</span>
+            <span>⚡ Instant Demo Personas Across Multiple Branches (Click to test in 1 second):</span>
           </div>
           <div class="persona-chips-grid">
             <button type="button" class="persona-btn" onclick="loadDemoPersona('ai')">
-              <span>🤖</span> Anya Sharma (AI & Data • 91%)
+              <span>🤖</span> Anya (AI & Data • 91%)
             </button>
             <button type="button" class="persona-btn" onclick="loadDemoPersona('software')">
-              <span>💻</span> David Chen (Full Stack • 86%)
+              <span>💻</span> David (Full Stack • 86%)
+            </button>
+            <button type="button" class="persona-btn" onclick="loadDemoPersona('robotics')">
+              <span>⚙️</span> Siddharth (Robotics & Mechatronics • 88%)
+            </button>
+            <button type="button" class="persona-btn" onclick="loadDemoPersona('biotech')">
+              <span>🧬</span> Priya (Biotech & Life Sciences • 89%)
+            </button>
+            <button type="button" class="persona-btn" onclick="loadDemoPersona('fintech')">
+              <span>📈</span> Zainab (Finance & FinTech • 92%)
+            </button>
+            <button type="button" class="persona-btn" onclick="loadDemoPersona('mechanical')">
+              <span>🏎️</span> Carlos (Mechanical & Auto • 85%)
             </button>
             <button type="button" class="persona-btn" onclick="loadDemoPersona('design')">
-              <span>🎨</span> Elena Rostova (UI/UX Design • 84%)
+              <span>🎨</span> Elena (UI/UX Design • 84%)
             </button>
             <button type="button" class="persona-btn" onclick="loadDemoPersona('cyber')">
-              <span>🛡️</span> Marcus Vance (Cybersecurity • 85%)
+              <span>🛡️</span> Marcus (Cybersecurity • 85%)
             </button>
             <button type="button" class="persona-btn" onclick="loadDemoPersona('business')">
-              <span>💼</span> Rohan Patel (Tech Startups • 87%)
+              <span>💼</span> Rohan (Tech Startups • 87%)
             </button>
           </div>
         </div>

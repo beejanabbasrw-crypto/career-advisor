@@ -70,6 +70,18 @@
           <button type="button" class="persona-btn" onclick="loadDemoPersona('software')">
             <span>💻</span> David (Software Dev)
           </button>
+          <button type="button" class="persona-btn" onclick="loadDemoPersona('robotics')">
+            <span>⚙️</span> Siddharth (Robotics & Mechatronics)
+          </button>
+          <button type="button" class="persona-btn" onclick="loadDemoPersona('biotech')">
+            <span>🧬</span> Priya (Biotech & Life Sciences)
+          </button>
+          <button type="button" class="persona-btn" onclick="loadDemoPersona('fintech')">
+            <span>📈</span> Zainab (Finance & FinTech)
+          </button>
+          <button type="button" class="persona-btn" onclick="loadDemoPersona('mechanical')">
+            <span>🏎️</span> Carlos (Mechanical & Auto)
+          </button>
           <button type="button" class="persona-btn" onclick="loadDemoPersona('design')">
             <span>🎨</span> Elena (UI/UX Design)
           </button>
@@ -124,7 +136,7 @@
             </div>
 
             <!-- Branch / Stream -->
-            <div class="form-group">
+            <div class="form-group form-full">
               <label for="branch-stream" class="form-label">
                 <span>📚 Branch / Academic Stream</span> <span class="required">*</span>
               </label>
@@ -132,10 +144,72 @@
                 type="text" 
                 id="branch-stream" 
                 class="form-input" 
-                placeholder="e.g. Computer Science Engineering, Commerce, Science (PCM)..." 
+                list="branch-suggestions"
+                placeholder="e.g. Computer Science Engineering, Robotics, Commerce, Biotech, Science (PCM)..." 
                 required
               >
-              <span class="form-hint">Example: CSE, IT, Electronics, Commerce, Physical Sciences.</span>
+              <span class="form-hint">Type to search 28+ supported branches or click a quick-select stream below.</span>
+
+              <!-- Comprehensive Branch Datalist (Auto-suggest) -->
+              <datalist id="branch-suggestions">
+                <!-- Computer & Software -->
+                <option value="Computer Science & Engineering (CSE)"></option>
+                <option value="Information Technology (IT)"></option>
+                <option value="Artificial Intelligence & Data Science (AI & DS)"></option>
+                <option value="Cybersecurity & Information Security"></option>
+                <option value="Computer Applications (BCA / MCA)"></option>
+                <option value="Software Engineering & Cloud Computing"></option>
+                
+                <!-- Electronics & Core Engineering -->
+                <option value="Electronics & Communication Engineering (ECE)"></option>
+                <option value="Electrical & Electronics Engineering (EEE)"></option>
+                <option value="Mechatronics & Robotics Engineering"></option>
+                <option value="Mechanical Engineering"></option>
+                <option value="Automobile Engineering"></option>
+                <option value="Aerospace & Aeronautical Engineering"></option>
+                <option value="Civil & Structural Engineering"></option>
+                <option value="Chemical Engineering & Materials"></option>
+                <option value="Biotechnology & Bioinformatics"></option>
+                <option value="Biomedical Engineering & Health Tech"></option>
+
+                <!-- Commerce, Finance & Management -->
+                <option value="Commerce & Accounting (B.Com)"></option>
+                <option value="Business Administration & Management (BBA / MBA)"></option>
+                <option value="Finance & Financial Technology (FinTech)"></option>
+                <option value="Economics & Econometrics"></option>
+                <option value="International Business & Supply Chain"></option>
+
+                <!-- Design, Media & Sciences -->
+                <option value="UI/UX & Digital Product Design"></option>
+                <option value="Multimedia, Animation & Game Design"></option>
+                <option value="Psychology & Cognitive Science"></option>
+                <option value="Mass Communication & Media Studies"></option>
+                <option value="Mathematics & Applied Statistics"></option>
+                <option value="Physics & Applied Sciences"></option>
+
+                <!-- High School / 10+2 Streams -->
+                <option value="Senior Secondary Science (PCM / Math, Physics, Chem)"></option>
+                <option value="Senior Secondary Science (PCB / Bio, Physics, Chem)"></option>
+                <option value="Senior Secondary Science (PCMB)"></option>
+                <option value="Senior Secondary Commerce"></option>
+                <option value="Senior Secondary Arts & Humanities"></option>
+              </datalist>
+
+              <!-- Quick-Select Stream Chips -->
+              <div class="branch-chips-row" style="margin-top: 0.75rem;">
+                <span style="font-size: 0.78rem; font-weight: 600; color: var(--text-muted); align-self: center; margin-right: 0.25rem;">Popular Streams:</span>
+                <button type="button" class="branch-chip" data-branch="Computer Science & Engineering (CSE)">💻 CSE / IT</button>
+                <button type="button" class="branch-chip" data-branch="Artificial Intelligence & Data Science (AI & DS)">🤖 AI & Data Science</button>
+                <button type="button" class="branch-chip" data-branch="Electronics & Communication Engineering (ECE)">⚡ ECE / Electrical</button>
+                <button type="button" class="branch-chip" data-branch="Mechatronics & Robotics Engineering">⚙️ Robotics & Mech</button>
+                <button type="button" class="branch-chip" data-branch="Biotechnology & Bioinformatics">🧬 Biotech & Health</button>
+                <button type="button" class="branch-chip" data-branch="Civil & Structural Engineering">🏗️ Civil & Infra</button>
+                <button type="button" class="branch-chip" data-branch="Commerce & Accounting (B.Com)">💼 Commerce / BBA</button>
+                <button type="button" class="branch-chip" data-branch="Finance & Financial Technology (FinTech)">📈 Finance & FinTech</button>
+                <button type="button" class="branch-chip" data-branch="UI/UX & Digital Product Design">🎨 UI/UX & Design</button>
+                <button type="button" class="branch-chip" data-branch="Mathematics & Applied Statistics">📐 Math & Stats</button>
+                <button type="button" class="branch-chip" data-branch="Senior Secondary Science (PCM / Math, Physics, Chem)">⚛️ 10+2 Science (PCM)</button>
+              </div>
             </div>
 
             <!-- Academic Score / CGPA -->
@@ -196,6 +270,18 @@
                   <input type="checkbox" name="subjects" value="English & Communication">
                   <span class="pill-label">🗣️ English & Communication</span>
                 </label>
+                <label class="pill-choice">
+                  <input type="checkbox" name="subjects" value="Biology">
+                  <span class="pill-label">🧬 Biology & Life Sciences</span>
+                </label>
+                <label class="pill-choice">
+                  <input type="checkbox" name="subjects" value="Mechanical Engineering">
+                  <span class="pill-label">⚙️ Mechanical & CAD Systems</span>
+                </label>
+                <label class="pill-choice">
+                  <input type="checkbox" name="subjects" value="Psychology">
+                  <span class="pill-label">🧠 Psychology & Human Behavior</span>
+                </label>
               </div>
             </div>
 
@@ -253,6 +339,18 @@
                 <label class="pill-choice">
                   <input type="checkbox" name="skills" value="Git & GitHub">
                   <span class="pill-label">🐙 Git & GitHub</span>
+                </label>
+                <label class="pill-choice">
+                  <input type="checkbox" name="skills" value="CAD & 3D Modeling">
+                  <span class="pill-label">📐 CAD & 3D Modeling</span>
+                </label>
+                <label class="pill-choice">
+                  <input type="checkbox" name="skills" value="Bioinformatics & Lab Tools">
+                  <span class="pill-label">🔬 Bioinformatics & Lab Tools</span>
+                </label>
+                <label class="pill-choice">
+                  <input type="checkbox" name="skills" value="Financial Modeling">
+                  <span class="pill-label">💹 Financial Modeling & Valuation</span>
                 </label>
               </div>
             </div>

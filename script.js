@@ -1106,24 +1106,86 @@ function calculateRecommendations(profile, assessmentAnswers) {
     const preferred = (profile.preferredField || "").toLowerCase();
     const academicScore = parseFloat(profile.academicScore) || 75;
 
-    // Stream & Branch alignment
-    if (stream.includes("computer") || stream.includes("it") || stream.includes("cse")) {
-      rawScores["software-developer"] += 18;
-      rawScores["web-developer"] += 16;
+    // Stream & Branch alignment (Comprehensive mapping across 28+ Academic Disciplines)
+    if (stream.includes("ai") || stream.includes("data science") || stream.includes("machine learning")) {
+      rawScores["ai-engineer"] += 28;
+      rawScores["data-scientist"] += 26;
+      rawScores["software-developer"] += 16;
+      rawScores["cloud-engineer"] += 14;
+      matchedFactors["ai-engineer"].streamMatch = `your specialization in ${profile.branch}`;
+      matchedFactors["data-scientist"].streamMatch = `your specialization in ${profile.branch}`;
+    } else if (stream.includes("mechatronic") || stream.includes("robot") || stream.includes("mechanical") || stream.includes("automobile") || stream.includes("aerospace") || stream.includes("aeronautical")) {
+      rawScores["electronics-engineer"] += 26;
+      rawScores["software-developer"] += 16;
+      rawScores["data-scientist"] += 14;
+      rawScores["cloud-engineer"] += 12;
+      matchedFactors["electronics-engineer"].streamMatch = `your engineering foundation in ${profile.branch}`;
+      matchedFactors["software-developer"].streamMatch = `your technical problem solving in ${profile.branch}`;
+    } else if (stream.includes("bio") || stream.includes("health") || stream.includes("pharma") || stream.includes("medical") || stream.includes("life science")) {
+      rawScores["data-scientist"] += 26;
+      rawScores["ai-engineer"] += 20;
+      rawScores["software-developer"] += 12;
+      matchedFactors["data-scientist"].streamMatch = `your domain background in ${profile.branch}`;
+      matchedFactors["ai-engineer"].streamMatch = `your life science training in ${profile.branch}`;
+    } else if (stream.includes("finan") || stream.includes("fintech") || stream.includes("econ") || stream.includes("account")) {
+      rawScores["business-entrepreneurship"] += 26;
+      rawScores["data-scientist"] += 24;
+      rawScores["cybersecurity-analyst"] += 14;
+      matchedFactors["business-entrepreneurship"].streamMatch = `your analytical acumen in ${profile.branch}`;
+      matchedFactors["data-scientist"].streamMatch = `your quantitative training in ${profile.branch}`;
+    } else if (stream.includes("civil") || stream.includes("architec") || stream.includes("construct") || stream.includes("infra")) {
+      rawScores["business-entrepreneurship"] += 22;
+      rawScores["ui-ux-designer"] += 18;
+      rawScores["cloud-engineer"] += 14;
+      matchedFactors["business-entrepreneurship"].streamMatch = `your systems planning skills in ${profile.branch}`;
+      matchedFactors["ui-ux-designer"].streamMatch = `your spatial design background in ${profile.branch}`;
+    } else if (stream.includes("computer") || stream.includes("it") || stream.includes("cse") || stream.includes("software") || stream.includes("bca") || stream.includes("mca")) {
+      rawScores["software-developer"] += 20;
+      rawScores["web-developer"] += 18;
       rawScores["ai-engineer"] += 16;
       rawScores["data-scientist"] += 14;
-      rawScores["cloud-engineer"] += 16;
-      rawScores["cybersecurity-analyst"] += 15;
-    } else if (stream.includes("electronic") || stream.includes("electrical") || stream.includes("ece") || stream.includes("eee")) {
+      rawScores["cloud-engineer"] += 18;
+      rawScores["cybersecurity-analyst"] += 16;
+      matchedFactors["software-developer"].streamMatch = `your academic curriculum in ${profile.branch}`;
+      matchedFactors["cloud-engineer"].streamMatch = `your computing background in ${profile.branch}`;
+    } else if (stream.includes("electronic") || stream.includes("electrical") || stream.includes("ece") || stream.includes("eee") || stream.includes("telecom")) {
       rawScores["electronics-engineer"] += 28;
-      rawScores["cybersecurity-analyst"] += 12;
-      rawScores["software-developer"] += 10;
-    } else if (stream.includes("commerce") || stream.includes("business") || stream.includes("bba") || stream.includes("b.com")) {
+      rawScores["cybersecurity-analyst"] += 14;
+      rawScores["cloud-engineer"] += 14;
+      rawScores["software-developer"] += 12;
+      matchedFactors["electronics-engineer"].streamMatch = `your core circuit and hardware curriculum in ${profile.branch}`;
+    } else if (stream.includes("commerce") || stream.includes("business") || stream.includes("bba") || stream.includes("b.com") || stream.includes("management")) {
       rawScores["business-entrepreneurship"] += 28;
-      rawScores["data-scientist"] += 14;
-    } else if (stream.includes("art") || stream.includes("design") || stream.includes("multimedia")) {
+      rawScores["data-scientist"] += 16;
+      rawScores["ui-ux-designer"] += 12;
+      matchedFactors["business-entrepreneurship"].streamMatch = `your business foundation in ${profile.branch}`;
+    } else if (stream.includes("math") || stream.includes("stat") || stream.includes("physic") || stream.includes("pure science")) {
+      rawScores["data-scientist"] += 26;
+      rawScores["ai-engineer"] += 24;
+      rawScores["software-developer"] += 16;
+      rawScores["electronics-engineer"] += 12;
+      matchedFactors["data-scientist"].streamMatch = `your deep mathematical foundation in ${profile.branch}`;
+      matchedFactors["ai-engineer"].streamMatch = `your quantitative problem solving in ${profile.branch}`;
+    } else if (stream.includes("art") || stream.includes("design") || stream.includes("multimedia") || stream.includes("graphic") || stream.includes("vfx") || stream.includes("animat")) {
       rawScores["ui-ux-designer"] += 28;
+      rawScores["web-developer"] += 16;
+      rawScores["business-entrepreneurship"] += 12;
+      matchedFactors["ui-ux-designer"].streamMatch = `your visual design and creative background in ${profile.branch}`;
+    } else if (stream.includes("psych") || stream.includes("cognit") || stream.includes("media") || stream.includes("journal") || stream.includes("humanit") || stream.includes("communicat")) {
+      rawScores["ui-ux-designer"] += 24;
+      rawScores["business-entrepreneurship"] += 20;
       rawScores["web-developer"] += 12;
+      matchedFactors["ui-ux-designer"].streamMatch = `your behavioral research insights in ${profile.branch}`;
+      matchedFactors["business-entrepreneurship"].streamMatch = `your communication acumen in ${profile.branch}`;
+    } else if (stream.includes("pcm") || stream.includes("non-med")) {
+      rawScores["software-developer"] += 14;
+      rawScores["ai-engineer"] += 14;
+      rawScores["electronics-engineer"] += 14;
+      matchedFactors["software-developer"].streamMatch = `your strong 10+2 science & mathematics preparation`;
+    } else if (stream.includes("pcb")) {
+      rawScores["data-scientist"] += 16;
+      rawScores["ai-engineer"] += 14;
+      matchedFactors["data-scientist"].streamMatch = `your 10+2 science and biological foundations`;
     }
 
     // Academic performance factor (Analytical tracks benefit from strong scores)
@@ -1167,6 +1229,21 @@ function calculateRecommendations(profile, assessmentAnswers) {
         rawScores["data-scientist"] += 10;
         matchedFactors["data-scientist"].subjects.push(subj);
       }
+      if (s.includes("bio") || s.includes("life science")) {
+        rawScores["data-scientist"] += 10;
+        rawScores["ai-engineer"] += 8;
+        matchedFactors["data-scientist"].subjects.push(subj);
+      }
+      if (s.includes("mech") || s.includes("cad")) {
+        rawScores["electronics-engineer"] += 10;
+        rawScores["software-developer"] += 6;
+        matchedFactors["electronics-engineer"].subjects.push(subj);
+      }
+      if (s.includes("psych") || s.includes("behavior")) {
+        rawScores["ui-ux-designer"] += 10;
+        rawScores["business-entrepreneurship"] += 6;
+        matchedFactors["ui-ux-designer"].subjects.push(subj);
+      }
     });
 
     // Student Skills mapping
@@ -1203,6 +1280,21 @@ function calculateRecommendations(profile, assessmentAnswers) {
       if (sk.includes("robotics") || sk.includes("circuits") || sk.includes("arduino")) {
         rawScores["electronics-engineer"] += 12;
         matchedFactors["electronics-engineer"].skills.push(skill);
+      }
+      if (sk.includes("cad") || sk.includes("solidworks") || sk.includes("3d")) {
+        rawScores["electronics-engineer"] += 10;
+        rawScores["ui-ux-designer"] += 8;
+        matchedFactors["electronics-engineer"].skills.push(skill);
+      }
+      if (sk.includes("bio") || sk.includes("lab")) {
+        rawScores["data-scientist"] += 12;
+        rawScores["ai-engineer"] += 8;
+        matchedFactors["data-scientist"].skills.push(skill);
+      }
+      if (sk.includes("finan") || sk.includes("valuation") || sk.includes("model")) {
+        rawScores["business-entrepreneurship"] += 12;
+        rawScores["data-scientist"] += 10;
+        matchedFactors["business-entrepreneurship"].skills.push(skill);
       }
     });
 
@@ -1294,6 +1386,9 @@ function calculateRecommendations(profile, assessmentAnswers) {
     let whyReason = `Matches your academic trajectory and performance in our multi-domain assessment.`;
 
     const highlightParts = [];
+    if (factors.streamMatch) {
+      highlightParts.push(factors.streamMatch);
+    }
     if (factors.skills.length > 0) {
       highlightParts.push(`your background in ${factors.skills.slice(0, 2).join(" & ")}`);
     }
@@ -2143,10 +2238,9 @@ function bootApplication() {
   try {
     initNavbar();
 
-    // Launch animation overlay for website entrance
-    if (document.getElementById("launch-overlay")) {
-      initLaunchAnimation();
-    }
+    // Modern, refined UI micro-interactions and stream selector chips
+    initModernUIEffects();
+    initBranchChips();
 
     // DOM-based detection (100% resilient across all URLs, file://, localhost, and clean rewrite routes)
     if (document.getElementById("profile-form")) {
@@ -2251,6 +2345,50 @@ const DEMO_PERSONAS = {
     interests: ["Startups & Venture Finance"],
     preferredField: "Business & Entrepreneurship",
     careerGoal: "Found and scale a high-impact technology startup solving sustainable supply-chain challenges."
+  },
+  robotics: {
+    name: "Siddharth Verma",
+    educationLevel: "Undergraduate (B.Tech / B.E)",
+    branch: "Mechatronics & Robotics Engineering",
+    academicScore: "88%",
+    favoriteSubjects: ["Electronics", "Mathematics", "Computer Science"],
+    skills: ["Robotics & Arduino", "C++", "Python", "Linux & Networking"],
+    interests: ["Robotics & Hardware", "Artificial Intelligence & ML"],
+    preferredField: "Electronics & Hardware Engineering",
+    careerGoal: "Design autonomous robotic systems and intelligent edge hardware controllers."
+  },
+  biotech: {
+    name: "Dr. Priya Nair",
+    educationLevel: "Postgraduate (M.Tech / MCA / M.Sc / MBA)",
+    branch: "Biotechnology & Bioinformatics",
+    academicScore: "89%",
+    favoriteSubjects: ["Statistics", "Computer Science", "Mathematics", "Biology"],
+    skills: ["Python", "Data Analysis", "SQL", "Bioinformatics & Lab Tools"],
+    interests: ["Data Analytics & Trends", "Artificial Intelligence & ML"],
+    preferredField: "Data Science",
+    careerGoal: "Lead computational genomics and predictive bioinformatics analytics at a premier health research institution."
+  },
+  fintech: {
+    name: "Zainab Al-Mansoor",
+    educationLevel: "Undergraduate (B.Sc / B.Com / BBA / B.A)",
+    branch: "Finance & FinTech",
+    academicScore: "92%",
+    favoriteSubjects: ["Economics", "Statistics", "Mathematics"],
+    skills: ["Data Analysis", "Python", "SQL", "Public Speaking & Leadership", "Financial Modeling"],
+    interests: ["Startups & Venture Finance", "Data Analytics & Trends"],
+    preferredField: "Business & Entrepreneurship",
+    careerGoal: "Build next-generation algorithmic FinTech products and digital financial infrastructure."
+  },
+  mechanical: {
+    name: "Carlos Mendez",
+    educationLevel: "Undergraduate (B.Tech / B.E)",
+    branch: "Mechanical & Automotive Engineering",
+    academicScore: "85%",
+    favoriteSubjects: ["Physics", "Mathematics", "Electronics", "Mechanical Engineering"],
+    skills: ["Robotics & Arduino", "C++", "CAD & 3D Modeling"],
+    interests: ["Robotics & Hardware", "Cloud Infrastructure"],
+    preferredField: "Electronics & Hardware Engineering",
+    careerGoal: "Pioneer smart electric vehicle architectures and connected automotive telemetry systems."
   }
 };
 
@@ -2266,7 +2404,9 @@ function loadDemoPersona(personaKey) {
     if (personaKey === "ai") sampleAnswers[i] = (i % 2 === 0) ? 1 : 0;
     else if (personaKey === "design") sampleAnswers[i] = 3;
     else if (personaKey === "cyber") sampleAnswers[i] = 2;
-    else if (personaKey === "business") sampleAnswers[i] = 1;
+    else if (personaKey === "business" || personaKey === "fintech") sampleAnswers[i] = 1;
+    else if (personaKey === "robotics" || personaKey === "mechanical") sampleAnswers[i] = (i % 3 === 0) ? 2 : 0;
+    else if (personaKey === "biotech") sampleAnswers[i] = (i % 2 === 0) ? 0 : 1;
     else sampleAnswers[i] = 0;
   }
   Storage.saveAssessment({ answers: sampleAnswers });
@@ -2575,374 +2715,87 @@ function updateComparisonView() {
 }
 
 // ===================================================================
-// 17. CINEMATIC WEBSITE LAUNCH ANIMATION ENGINE
+// 17. MODERN HUMAN-DESIGNED UI MOTION & STREAM SELECTOR ENGINE
 // ===================================================================
-let launchState = {
-  active: false,
-  progress: 0,
-  timer: null,
-  starfieldAnimId: null,
-  soundEnabled: false,
-  audioCtx: null
-};
 
-// Web Audio API Sound Synthesizer (No external MP3 files required)
-function playLaunchTone(freq, type = 'sine', duration = 0.15, vol = 0.08) {
-  if (!launchState.soundEnabled) return;
-  try {
-    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-    if (!AudioContextClass) return;
-    if (!launchState.audioCtx) {
-      launchState.audioCtx = new AudioContextClass();
-    }
-    if (launchState.audioCtx.state === 'suspended') {
-      launchState.audioCtx.resume();
-    }
-    const osc = launchState.audioCtx.createOscillator();
-    const gain = launchState.audioCtx.createGain();
-    osc.type = type;
-    osc.frequency.setValueAtTime(freq, launchState.audioCtx.currentTime);
-    gain.gain.setValueAtTime(vol, launchState.audioCtx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.0001, launchState.audioCtx.currentTime + duration);
-    osc.connect(gain);
-    gain.connect(launchState.audioCtx.destination);
-    osc.start();
-    osc.stop(launchState.audioCtx.currentTime + duration);
-  } catch (e) {
-    // Graceful fallback if user hasn't interacted yet
+/**
+ * Clean, subtle scroll-triggered micro-interactions.
+ * Uses native IntersectionObserver for smooth, organic element reveals.
+ */
+function initModernUIEffects() {
+  if (typeof document === "undefined") return;
+
+  const targets = document.querySelectorAll(
+    ".step-card, .feature-card, .top-recommendation-card, .stat-box, .share-banner-card, .comparison-table-wrapper"
+  );
+
+  if ("IntersectionObserver" in window) {
+    const observer = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-revealed");
+          obs.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.12,
+      rootMargin: "0px 0px -30px 0px"
+    });
+
+    targets.forEach(el => {
+      el.classList.add("reveal-on-scroll");
+      observer.observe(el);
+    });
+  } else {
+    targets.forEach(el => el.classList.add("is-revealed"));
   }
 }
 
-function playLiftoffChime() {
-  if (!launchState.soundEnabled) return;
-  const notes = [523.25, 659.25, 783.99, 1046.50]; // C5 - E5 - G5 - C6
-  notes.forEach((freq, i) => {
-    setTimeout(() => {
-      playLaunchTone(freq, 'triangle', 0.4, 0.12);
-    }, i * 110);
+/**
+ * Initializes academic stream quick-select chips in the profile builder.
+ * Clicking a stream chip auto-populates the input and gives tactile feedback.
+ */
+function initBranchChips() {
+  const chips = document.querySelectorAll(".branch-chip");
+  const branchInput = document.getElementById("branch-stream");
+  if (!chips.length || !branchInput) return;
+
+  chips.forEach(chip => {
+    chip.addEventListener("click", () => {
+      chips.forEach(c => c.classList.remove("active"));
+      chip.classList.add("active");
+      const branchVal = chip.getAttribute("data-branch") || chip.textContent.trim();
+      branchInput.value = branchVal;
+      branchInput.dispatchEvent(new Event("input", { bubbles: true }));
+      branchInput.dispatchEvent(new Event("change", { bubbles: true }));
+      showToast(`Selected stream: ${branchVal}`, "info");
+    });
+  });
+
+  // Sync active chip state if student types in the text input
+  branchInput.addEventListener("input", () => {
+    const current = branchInput.value.toLowerCase().trim();
+    chips.forEach(chip => {
+      const b = (chip.getAttribute("data-branch") || "").toLowerCase();
+      if (current && b.includes(current)) {
+        chip.classList.add("active");
+      } else {
+        chip.classList.remove("active");
+      }
+    });
   });
 }
 
-function toggleLaunchAudio() {
-  launchState.soundEnabled = !launchState.soundEnabled;
-  const icon = document.getElementById("launch-sound-icon");
-  const state = document.getElementById("launch-sound-state");
-  if (icon) icon.textContent = launchState.soundEnabled ? "🔊" : "🔇";
-  if (state) state.textContent = launchState.soundEnabled ? "ON" : "OFF";
-  if (launchState.soundEnabled) {
-    playLaunchTone(600, 'sine', 0.12, 0.1);
-  }
+// Backward-compatible fallback stubs (guarantees zero console warnings or breakage)
+function startWebsiteLaunchAnimation() {
+  const target = document.querySelector(".hero-actions") || document.querySelector("main");
+  if (target) target.scrollIntoView({ behavior: "smooth" });
 }
 
-function initLaunchAnimation() {
-  const overlay = document.getElementById("launch-overlay");
-  if (!overlay) return;
-
-  const urlParams = new URLSearchParams(window.location.search);
-  const forceLaunch = urlParams.get("launch") === "1" || urlParams.get("launch") === "true";
-  const hasSeen = sessionStorage.getItem("hasSeenLaunchAnimation_v1");
-
-  // If first time visit or URL parameter ?launch=true is set, trigger launch animation
-  if (!hasSeen || forceLaunch) {
-    startWebsiteLaunchAnimation(false);
-  } else {
-    // Already seen: hide overlay immediately and trigger subtle hero entrance
-    overlay.style.display = "none";
-    document.body.classList.add("page-launched");
-  }
-}
-
-function startWebsiteLaunchAnimation(isManualTrigger = false) {
-  const overlay = document.getElementById("launch-overlay");
-  const vessel = document.getElementById("launch-vessel");
-  const progressBar = document.getElementById("launch-progress-bar");
-  const statusText = document.getElementById("launch-status-text");
-  const metricStatus = document.getElementById("launch-metric-status");
-  const metricPercent = document.getElementById("launch-metric-percent");
-  const flashOverlay = document.getElementById("launch-flash-overlay");
-
-  if (!overlay) return;
-
-  // Reset state
-  if (launchState.timer) clearInterval(launchState.timer);
-  launchState.active = true;
-  launchState.progress = 0;
-
-  overlay.classList.remove("launch-closing");
-  overlay.style.display = "flex";
-  overlay.style.opacity = "1";
-  overlay.style.visibility = "visible";
-
-  if (vessel) {
-    vessel.classList.remove("rumble", "liftoff");
-    vessel.style.transform = "none";
-  }
-  if (progressBar) progressBar.style.width = "0%";
-  if (metricPercent) metricPercent.textContent = "0%";
-  if (metricStatus) metricStatus.textContent = "CALIBRATING";
-  if (flashOverlay) flashOverlay.classList.remove("flash");
-
-  // Start starfield canvas
-  startLaunchStarfield();
-
-  // If manually triggered, enable audio if user has interacted
-  if (isManualTrigger && !launchState.soundEnabled) {
-    launchState.soundEnabled = true;
-    const icon = document.getElementById("launch-sound-icon");
-    const state = document.getElementById("launch-sound-state");
-    if (icon) icon.textContent = "🔊";
-    if (state) state.textContent = "ON";
-  }
-
-  const stages = [
-    { threshold: 15, text: "INITIALIZING HEURISTIC CAREER ENGINE...", status: "BOOTING", tone: 440 },
-    { threshold: 35, text: "CALIBRATING 9+ ACCREDITED EDUCATION ROADMAPS...", status: "MAPPING", tone: 520 },
-    { threshold: 60, text: "SYNCHRONIZING 16-DOMAIN APTITUDE QUESTIONS...", status: "INDEXING", tone: 600 },
-    { threshold: 82, text: "ENGAGING LOCALSTORAGE STUDENT VAULT...", status: "ARMING", tone: 700 },
-    { threshold: 92, text: "BOOSTER IGNITION • ALL TELEMETRY NOMINAL!", status: "IGNITION", tone: 850 },
-    { threshold: 100, text: "LIFTOFF ACHIEVED! WELCOME TO ADVISOR!", status: "GO FOR LAUNCH", tone: 1050 }
-  ];
-
-  let currentStageIdx = 0;
-  const totalDurationMs = 2600; // ~2.6 seconds total
-  const intervalMs = 25;
-  const step = 100 / (totalDurationMs / intervalMs);
-
-  launchState.timer = setInterval(() => {
-    launchState.progress += step;
-    if (launchState.progress > 100) launchState.progress = 100;
-
-    const p = Math.round(launchState.progress);
-    if (progressBar) progressBar.style.width = `${p}%`;
-    if (metricPercent) metricPercent.textContent = `${p}%`;
-
-    // Check stage transitions
-    if (currentStageIdx < stages.length && p >= stages[currentStageIdx].threshold) {
-      const stage = stages[currentStageIdx];
-      if (statusText) statusText.textContent = stage.text;
-      if (metricStatus) metricStatus.textContent = stage.status;
-      playLaunchTone(stage.tone, 'sine', 0.1, 0.08);
-      currentStageIdx++;
-    }
-
-    // Rocket rumble at 80%
-    if (p >= 80 && vessel && !vessel.classList.contains("rumble")) {
-      vessel.classList.add("rumble");
-    }
-
-    // Liftoff sequence at 100%
-    if (p >= 100) {
-      clearInterval(launchState.timer);
-      launchState.timer = null;
-
-      // Liftoff animation
-      if (vessel) {
-        vessel.classList.remove("rumble");
-        vessel.classList.add("liftoff");
-      }
-
-      playLiftoffChime();
-
-      // Lens flash
-      if (flashOverlay) {
-        setTimeout(() => flashOverlay.classList.add("flash"), 250);
-      }
-
-      // Close launch overlay smoothly
-      setTimeout(() => {
-        completeLaunchSequence();
-      }, 550);
-    }
-  }, intervalMs);
-}
-
-function completeLaunchSequence() {
-  const overlay = document.getElementById("launch-overlay");
-  if (overlay) {
-    overlay.classList.add("launch-closing");
-    setTimeout(() => {
-      overlay.style.display = "none";
-      stopLaunchStarfield();
-      document.body.classList.add("page-launched");
-      sessionStorage.setItem("hasSeenLaunchAnimation_v1", "true");
-      fireLaunchConfetti();
-    }, 700);
-  }
-}
-
-function skipWebsiteLaunchAnimation() {
-  if (launchState.timer) {
-    clearInterval(launchState.timer);
-    launchState.timer = null;
-  }
-  completeLaunchSequence();
-}
-
-// Interactive Cosmic Starfield Simulation
-let starfieldState = {
-  stars: [],
-  canvas: null,
-  ctx: null,
-  animId: null
-};
-
-function startLaunchStarfield() {
-  const canvas = document.getElementById("launch-starfield");
-  if (!canvas) return;
-
-  const ctx = canvas.getContext("2d");
-  if (!ctx) return;
-
-  starfieldState.canvas = canvas;
-  starfieldState.ctx = ctx;
-
-  const resize = () => {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-  };
-  resize();
-
-  // Generate 120 cosmic stars
-  starfieldState.stars = [];
-  for (let i = 0; i < 120; i++) {
-    starfieldState.stars.push({
-      x: (Math.random() - 0.5) * canvas.width * 2,
-      y: (Math.random() - 0.5) * canvas.height * 2,
-      z: Math.random() * canvas.width,
-      size: Math.random() * 1.8 + 0.5,
-      color: ['#38bdf8', '#818cf8', '#ffffff', '#c084fc', '#fef08a'][Math.floor(Math.random() * 5)]
-    });
-  }
-
-  function render() {
-    ctx.fillStyle = "rgba(2, 6, 23, 0.35)";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    const cx = canvas.width / 2;
-    const cy = canvas.height / 2;
-    const speed = launchState.progress > 85 ? 18 : 3.5;
-
-    for (let s of starfieldState.stars) {
-      s.z -= speed;
-      if (s.z <= 0) {
-        s.z = canvas.width;
-        s.x = (Math.random() - 0.5) * canvas.width * 2;
-        s.y = (Math.random() - 0.5) * canvas.height * 2;
-      }
-
-      const k = 180 / s.z;
-      const px = s.x * k + cx;
-      const py = s.y * k + cy;
-
-      if (px >= 0 && px <= canvas.width && py >= 0 && py <= canvas.height) {
-        const rad = Math.max(0.6, (1 - s.z / canvas.width) * s.size * 2.2);
-        const alpha = Math.min(1, Math.max(0.2, (1 - s.z / canvas.width)));
-
-        ctx.beginPath();
-        ctx.arc(px, py, rad, 0, Math.PI * 2);
-        ctx.fillStyle = s.color;
-        ctx.globalAlpha = alpha;
-        ctx.fill();
-
-        // Warp speed streaks near liftoff
-        if (speed > 8) {
-          ctx.beginPath();
-          ctx.moveTo(px, py);
-          ctx.lineTo(px - (px - cx) * 0.12, py - (py - cy) * 0.12);
-          ctx.strokeStyle = s.color;
-          ctx.lineWidth = rad * 0.8;
-          ctx.stroke();
-        }
-      }
-    }
-    ctx.globalAlpha = 1;
-    starfieldState.animId = requestAnimationFrame(render);
-  }
-
-  if (starfieldState.animId) cancelAnimationFrame(starfieldState.animId);
-  starfieldState.animId = requestAnimationFrame(render);
-}
-
-function stopLaunchStarfield() {
-  if (starfieldState.animId) {
-    cancelAnimationFrame(starfieldState.animId);
-    starfieldState.animId = null;
-  }
-}
-
-// Celebratory Confetti Burst System
-function fireLaunchConfetti() {
-  const canvas = document.getElementById("launch-confetti-canvas");
-  if (!canvas) return;
-
-  const ctx = canvas.getContext("2d");
-  if (!ctx) return;
-
-  canvas.style.display = "block";
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-
-  const colors = ["#4f46e5", "#06b6d4", "#10b981", "#f59e0b", "#ec4899", "#8b5cf6", "#f43f5e", "#fbbf24"];
-  const particles = [];
-  const count = 130;
-
-  for (let i = 0; i < count; i++) {
-    particles.push({
-      x: canvas.width / 2 + (Math.random() - 0.5) * 200,
-      y: canvas.height * 0.7,
-      vx: (Math.random() - 0.5) * 16,
-      vy: -(Math.random() * 16 + 10),
-      size: Math.random() * 9 + 5,
-      color: colors[Math.floor(Math.random() * colors.length)],
-      rotation: Math.random() * 360,
-      rotationSpeed: (Math.random() - 0.5) * 12,
-      opacity: 1,
-      shape: Math.random() > 0.4 ? 'rect' : 'circle'
-    });
-  }
-
-  let startTime = Date.now();
-  function drawConfetti() {
-    const elapsed = Date.now() - startTime;
-    if (elapsed > 4500) {
-      canvas.style.display = "none";
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      return;
-    }
-
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    for (let p of particles) {
-      p.x += p.vx;
-      p.y += p.vy;
-      p.vy += 0.38; // gravity
-      p.vx *= 0.985; // air drag
-      p.rotation += p.rotationSpeed;
-      if (elapsed > 2500) {
-        p.opacity = Math.max(0, 1 - (elapsed - 2500) / 2000);
-      }
-
-      ctx.save();
-      ctx.translate(p.x, p.y);
-      ctx.rotate((p.rotation * Math.PI) / 180);
-      ctx.globalAlpha = p.opacity;
-      ctx.fillStyle = p.color;
-
-      if (p.shape === 'rect') {
-        ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.65);
-      } else {
-        ctx.beginPath();
-        ctx.arc(0, 0, p.size / 2, 0, Math.PI * 2);
-        ctx.fill();
-      }
-      ctx.restore();
-    }
-
-    requestAnimationFrame(drawConfetti);
-  }
-
-  requestAnimationFrame(drawConfetti);
-}
+function initLaunchAnimation() {}
+function skipWebsiteLaunchAnimation() {}
+function toggleLaunchAudio() {}
+function fireLaunchConfetti() {}
 
 // Attach all new features to window
 if (typeof window !== "undefined") {
