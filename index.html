@@ -12,47 +12,88 @@
 </head>
 <body>
 
-  <!-- High-End Bespoke Site Launch Experience -->
+  <!-- Modern Aerodynamic Rocket Launch Experience -->
   <div id="site-launch-overlay" class="site-launch-overlay" aria-hidden="true">
     <div class="launch-backdrop-glow"></div>
-    <button type="button" class="launch-skip-link" onclick="skipSiteLaunch()" title="Skip introduction">
+    <div class="launch-stars-layer"></div>
+    <button type="button" class="launch-skip-link" onclick="skipSiteLaunch()" title="Skip launch sequence">
       Skip ✕
     </button>
     <div class="launch-stage">
-      <div class="launch-emblem-wrap">
-        <div class="launch-glow-ring"></div>
-        <div class="launch-emblem-circle">
-          <svg class="launch-compass-svg" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="24" cy="24" r="22" stroke="rgba(129, 140, 248, 0.35)" stroke-width="2" stroke-dasharray="4 4" />
-            <circle cx="24" cy="24" r="16" stroke="rgba(255, 255, 255, 0.15)" stroke-width="1.5" />
-            <!-- Dynamic Precision Compass Needle -->
-            <path class="compass-needle" d="M24 8 L28 24 L24 22 L20 24 Z" fill="url(#needleGradNorth)" />
-            <path class="compass-needle-south" d="M24 40 L20 24 L24 26 L28 24 Z" fill="url(#needleGradSouth)" />
-            <circle cx="24" cy="24" r="3" fill="#ffffff" />
+      
+      <!-- Rocket Launchpad Visual -->
+      <div class="rocket-launchpad">
+        <div class="launchpad-gantry"></div>
+        <div class="launch-smoke-cloud" id="launch-smoke"></div>
+        
+        <!-- Aerodynamic Rocket Assembly -->
+        <div class="rocket-assembly" id="rocket-assembly">
+          <svg class="modern-rocket-svg" viewBox="0 0 80 140" fill="none" xmlns="http://www.w3.org/2000/svg">
             <defs>
-              <linearGradient id="needleGradNorth" x1="20" y1="8" x2="28" y2="24" gradientUnits="userSpaceOnUse">
-                <stop offset="0%" stop-color="#38bdf8" />
-                <stop offset="100%" stop-color="#4f46e5" />
+              <linearGradient id="fuselageGrad" x1="40" y1="0" x2="40" y2="105" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#ffffff"/>
+                <stop offset="65%" stop-color="#e2e8f0"/>
+                <stop offset="100%" stop-color="#cbd5e1"/>
               </linearGradient>
-              <linearGradient id="needleGradSouth" x1="20" y1="24" x2="28" y2="40" gradientUnits="userSpaceOnUse">
-                <stop offset="0%" stop-color="#64748b" />
-                <stop offset="100%" stop-color="#334155" />
+              <linearGradient id="accentGrad" x1="40" y1="0" x2="40" y2="105" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#4f46e5"/>
+                <stop offset="100%" stop-color="#06b6d4"/>
+              </linearGradient>
+              <linearGradient id="cockpitGrad" x1="40" y1="36" x2="40" y2="52" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#38bdf8"/>
+                <stop offset="100%" stop-color="#0284c7"/>
+              </linearGradient>
+              <linearGradient id="plasmaGrad" x1="40" y1="108" x2="40" y2="140" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#ffffff"/>
+                <stop offset="25%" stop-color="#38bdf8"/>
+                <stop offset="65%" stop-color="#f97316"/>
+                <stop offset="100%" stop-color="#ef4444" stop-opacity="0"/>
               </linearGradient>
             </defs>
+
+            <!-- Aerodynamic Fins -->
+            <path d="M26 78 L10 106 C8 109 10 112 14 112 L26 104 Z" fill="url(#accentGrad)" />
+            <path d="M54 78 L70 106 C72 109 70 112 66 112 L54 104 Z" fill="url(#accentGrad)" />
+            <path d="M38 78 L42 78 L41 106 L39 106 Z" fill="#64748b" opacity="0.6"/>
+
+            <!-- Main Fuselage -->
+            <path d="M40 8 C33 22 26 50 26 102 L54 102 C54 50 47 22 40 8 Z" fill="url(#fuselageGrad)" />
+
+            <!-- Sleek Nosecone -->
+            <path d="M40 8 C37 15 35 24 34 32 L46 32 C45 24 43 15 40 8 Z" fill="url(#accentGrad)" />
+
+            <!-- Cockpit Porthole -->
+            <circle cx="40" cy="46" r="7" fill="#0f172a" stroke="#ffffff" stroke-width="2"/>
+            <circle cx="40" cy="46" r="5" fill="url(#cockpitGrad)" />
+            <ellipse cx="38.5" cy="44" rx="2" ry="1" fill="#ffffff" opacity="0.85"/>
+
+            <!-- Rocket Nozzle -->
+            <path d="M33 102 L31 108 L49 108 L47 102 Z" fill="#334155" />
+
+            <!-- Propulsion Plasma Flame -->
+            <g class="thruster-flame-group" id="thruster-flame">
+              <ellipse cx="40" cy="122" rx="9" ry="18" fill="url(#plasmaGrad)" class="plasma-core" />
+              <ellipse cx="40" cy="120" rx="4.5" ry="10" fill="#ffffff" class="plasma-inner" />
+            </g>
           </svg>
+
+          <!-- Dynamic Exhaust Aura -->
+          <div class="thruster-exhaust-glow" id="thruster-glow"></div>
         </div>
       </div>
 
+      <!-- Launch Brand Information -->
       <div class="launch-brand-group">
-        <span class="launch-kicker">PERSONALIZED EDUCATION & CAREER PATHWAYS</span>
-        <h1 class="launch-title">CareerPath</h1>
-        <div class="launch-tagline">One-Stop Advisor</div>
+        <span class="launch-kicker">CAREER TRAJECTORY ELEVATION</span>
+        <h1 class="launch-title">CareerPath Launch</h1>
+        <div class="launch-tagline">One-Stop Career & Education Advisor</div>
       </div>
 
+      <!-- Mission Telemetry & Progress Card -->
       <div class="launch-status-card">
         <div class="launch-status-header">
-          <span id="launch-status-msg" class="launch-status-msg">Preparing personalized pathways...</span>
-          <span id="launch-counter" class="launch-counter">0%</span>
+          <span id="launch-status-msg" class="launch-status-msg">Pre-flight telemetry & profile sync...</span>
+          <span id="launch-counter" class="launch-counter">T-03</span>
         </div>
         <div class="launch-track">
           <div id="launch-bar-fill" class="launch-bar-fill"></div>
@@ -82,8 +123,8 @@
       </ul>
 
       <div style="display: flex; align-items: center; gap: 0.6rem;">
-        <button class="btn-share-badge" onclick="replaySiteLaunch()" title="Experience site launch animation">
-          <span>✨</span> Launch Intro
+        <button class="btn-share-badge" onclick="replaySiteLaunch()" title="Experience rocket launch animation">
+          <span>🚀</span> Rocket Launch
         </button>
         <button class="btn-share-badge" onclick="openShareModal()" title="Get direct shareable link for any student">
           <span>🔗</span> Share Link
@@ -126,8 +167,8 @@
           <button type="button" class="btn btn-secondary btn-lg" onclick="openComparisonModal()">
             <span>⚖️</span> Compare Careers
           </button>
-          <button type="button" class="btn btn-outline-primary btn-lg" onclick="replaySiteLaunch()" title="Experience launch animation">
-            <span>✨</span> Launch Intro
+          <button type="button" class="btn btn-outline-primary btn-lg" onclick="replaySiteLaunch()" title="Experience rocket launch animation">
+            <span>🚀</span> Rocket Launch
           </button>
         </div>
 

@@ -2147,7 +2147,7 @@ img {
 }
 
 /* ===================================================================
-   19. BESPOKE PRODUCT LAUNCH EXPERIENCE OVERLAY
+   19. MODERN AERODYNAMIC ROCKET LAUNCH EXPERIENCE
    =================================================================== */
 .site-launch-overlay {
   position: fixed;
@@ -2155,171 +2155,265 @@ img {
   width: 100vw;
   height: 100vh;
   z-index: 999999;
-  background: #090d16;
+  background: radial-gradient(ellipse at center, #0b1120 0%, #060913 75%, #03060c 100%);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  transition: transform 0.85s cubic-bezier(0.76, 0, 0.24, 1), opacity 0.5s ease;
-  will-change: transform, opacity;
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.6s;
+  will-change: opacity, transform;
 }
 
 .site-launch-overlay.launch-done {
-  transform: translateY(-100%);
   opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.launch-stars-layer {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    radial-gradient(1px 1px at 20px 30px, #ffffff, rgba(0,0,0,0)),
+    radial-gradient(1.5px 1.5px at 120px 80px, #93c5fd, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 240px 190px, #ffffff, rgba(0,0,0,0)),
+    radial-gradient(1.5px 1.5px at 380px 120px, #a5b4fc, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 520px 280px, #ffffff, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 700px 90px, #38bdf8, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 840px 220px, #ffffff, rgba(0,0,0,0)),
+    radial-gradient(1.5px 1.5px at 980px 140px, #c084fc, rgba(0,0,0,0));
+  background-repeat: repeat;
+  background-size: 550px 350px;
+  opacity: 0.55;
   pointer-events: none;
 }
 
 .launch-backdrop-glow {
   position: absolute;
-  width: 650px;
-  height: 650px;
+  width: 600px;
+  height: 600px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(99, 102, 241, 0.2) 0%, rgba(56, 189, 248, 0.08) 45%, transparent 70%);
+  background: radial-gradient(circle, rgba(79, 70, 229, 0.22) 0%, rgba(56, 189, 248, 0.08) 45%, transparent 70%);
   pointer-events: none;
-  filter: blur(40px);
-  animation: launchGlowBreathe 4s ease-in-out infinite alternate;
+  filter: blur(45px);
+  animation: launchGlowBreathe 3.5s ease-in-out infinite alternate;
 }
 
 @keyframes launchGlowBreathe {
-  0% { transform: scale(0.92); opacity: 0.7; }
-  100% { transform: scale(1.08); opacity: 1; }
+  0% { transform: scale(0.95); opacity: 0.65; }
+  100% { transform: scale(1.08); opacity: 0.95; }
 }
 
 .launch-skip-link {
   position: absolute;
   top: 1.5rem;
   right: 1.75rem;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  color: #94a3b8;
-  padding: 0.4rem 0.95rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: #cbd5e1;
+  padding: 0.45rem 1rem;
   border-radius: var(--radius-full);
   font-size: 0.8rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
-  z-index: 10;
-  backdrop-filter: blur(8px);
+  z-index: 20;
+  backdrop-filter: blur(10px);
 }
 
 .launch-skip-link:hover {
-  background: rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.2);
   color: #ffffff;
-  border-color: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.35);
   transform: translateY(-1px);
 }
 
 .launch-stage {
   position: relative;
-  z-index: 5;
+  z-index: 10;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  max-width: 480px;
+  max-width: 500px;
   padding: 1.5rem;
+  margin: auto 0;
 }
 
-.launch-emblem-wrap {
+/* Rocket Launchpad Visual Container */
+.rocket-launchpad {
   position: relative;
-  width: 96px;
-  height: 96px;
+  width: 140px;
+  height: 180px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 1.75rem;
+  margin-bottom: 1.5rem;
 }
 
-.launch-glow-ring {
+.launchpad-gantry {
   position: absolute;
-  inset: -8px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(99, 102, 241, 0.35) 0%, transparent 70%);
-  filter: blur(12px);
-  animation: ringPulse 2.4s ease-in-out infinite;
+  bottom: 10px;
+  width: 100px;
+  height: 8px;
+  background: linear-gradient(90deg, transparent, rgba(148, 163, 184, 0.3) 20%, rgba(148, 163, 184, 0.4) 50%, rgba(148, 163, 184, 0.3) 80%, transparent);
+  border-radius: 4px;
 }
 
-.launch-emblem-circle {
+.launchpad-gantry::after {
+  content: '';
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70px;
+  height: 12px;
+  border-bottom: 2px dashed rgba(129, 140, 248, 0.35);
+}
+
+/* Rocket Assembly */
+.rocket-assembly {
+  position: relative;
   width: 90px;
-  height: 90px;
-  border-radius: 50%;
-  background: linear-gradient(145deg, #1e293b, #0f172a);
-  border: 1.5px solid rgba(129, 140, 248, 0.35);
+  height: 155px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.15);
+  z-index: 5;
+  transition: transform 0.3s ease;
+  will-change: transform;
 }
 
-.launch-compass-svg {
-  width: 58px;
-  height: 58px;
+.modern-rocket-svg {
+  width: 90px;
+  height: 155px;
+  filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.6));
 }
 
-/* Precision compass sweep */
-.compass-needle {
-  transform-origin: 24px 24px;
-  animation: needleSweep 2.2s cubic-bezier(0.25, 1, 0.5, 1) infinite;
+/* Propulsion Flame Plume */
+.thruster-flame-group {
+  opacity: 0;
+  transform-origin: 40px 108px;
+  transform: scaleY(0.2);
+  transition: opacity 0.25s ease, transform 0.25s ease;
 }
 
-.compass-needle-south {
-  transform-origin: 24px 24px;
-  animation: needleSweep 2.2s cubic-bezier(0.25, 1, 0.5, 1) infinite;
+.thruster-flame-group.ignited {
+  opacity: 1;
+  transform: scaleY(1);
+  animation: plasmaFlameFlicker 0.1s infinite alternate ease-in-out;
 }
 
-@keyframes needleSweep {
-  0% { transform: rotate(-55deg); }
-  45% { transform: rotate(22deg); }
-  75% { transform: rotate(-7deg); }
-  100% { transform: rotate(0deg); }
+@keyframes plasmaFlameFlicker {
+  0% { transform: scaleY(0.94) scaleX(0.96); filter: drop-shadow(0 0 10px #f97316); }
+  100% { transform: scaleY(1.08) scaleX(1.04); filter: drop-shadow(0 0 20px #38bdf8); }
 }
 
-@keyframes ringPulse {
-  0%, 100% { opacity: 0.5; transform: scale(0.96); }
-  50% { opacity: 0.95; transform: scale(1.05); }
+.thruster-exhaust-glow {
+  position: absolute;
+  bottom: 0px;
+  width: 75px;
+  height: 75px;
+  background: radial-gradient(circle, rgba(249, 115, 22, 0.75) 0%, rgba(56, 189, 248, 0.35) 45%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  transform: scale(0.4);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  filter: blur(10px);
 }
 
+.thruster-exhaust-glow.ignited {
+  opacity: 1;
+  transform: scale(1.15);
+  animation: exhaustGlowPulse 0.15s infinite alternate;
+}
+
+@keyframes exhaustGlowPulse {
+  0% { opacity: 0.8; transform: scale(1); }
+  100% { opacity: 1; transform: scale(1.25); }
+}
+
+/* Micro-Tremor During Ignition */
+.rocket-assembly.rocket-ignited {
+  animation: launchPreTremor 0.08s infinite alternate ease-in-out;
+}
+
+@keyframes launchPreTremor {
+  0% { transform: translate(-1.2px, 0.8px); }
+  100% { transform: translate(1.2px, -0.8px); }
+}
+
+/* Liftoff Ascent Physics */
+.rocket-assembly.rocket-liftoff {
+  animation: none !important;
+  transform: translateY(-135vh) scale(1.12);
+  transition: transform 0.95s cubic-bezier(0.55, 0.02, 0.15, 0.98);
+}
+
+/* Atmospheric Smoke Cloud at Base */
+.launch-smoke-cloud {
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%) scale(0.3);
+  width: 130px;
+  height: 45px;
+  background: radial-gradient(ellipse, rgba(255, 255, 255, 0.85) 0%, rgba(148, 163, 184, 0.5) 45%, transparent 70%);
+  border-radius: 50%;
+  filter: blur(14px);
+  opacity: 0;
+  transition: opacity 0.35s ease, transform 0.55s ease;
+  pointer-events: none;
+}
+
+.launch-smoke-cloud.active {
+  opacity: 0.95;
+  transform: translateX(-50%) scale(1.4);
+}
+
+/* Typography & Mission Card */
 .launch-kicker {
   font-family: inherit;
   font-size: 0.72rem;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   font-weight: 700;
   color: #818cf8;
   display: block;
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.35rem;
 }
 
 .launch-title {
-  font-size: 2.35rem;
+  font-size: 2.25rem;
   font-weight: 800;
   letter-spacing: -0.025em;
-  background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 50%, #94a3b8 100%);
+  background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 45%, #94a3b8 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   margin: 0;
-  line-height: 1.1;
+  line-height: 1.15;
 }
 
 .launch-tagline {
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   font-weight: 600;
   color: #94a3b8;
-  margin-top: 0.35rem;
-  margin-bottom: 1.85rem;
+  margin-top: 0.3rem;
+  margin-bottom: 1.75rem;
 }
 
 .launch-status-card {
   width: 100%;
-  max-width: 340px;
-  background: rgba(15, 23, 42, 0.7);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  max-width: 350px;
+  background: rgba(15, 23, 42, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: var(--radius-lg);
-  padding: 0.9rem 1.15rem;
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(12px);
+  padding: 0.95rem 1.25rem;
+  box-shadow: 0 12px 30px -5px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(14px);
 }
 
 .launch-status-header {
@@ -2336,19 +2430,19 @@ img {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 220px;
+  max-width: 230px;
   text-align: left;
 }
 
 .launch-counter {
   color: #38bdf8;
-  font-weight: 700;
+  font-weight: 800;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
 
 .launch-track {
   width: 100%;
-  height: 4px;
+  height: 5px;
   background: rgba(255, 255, 255, 0.1);
   border-radius: var(--radius-full);
   overflow: hidden;
@@ -2357,9 +2451,9 @@ img {
 .launch-bar-fill {
   height: 100%;
   width: 0%;
-  background: linear-gradient(90deg, #38bdf8 0%, #6366f1 50%, #a855f7 100%);
+  background: linear-gradient(90deg, #38bdf8 0%, #6366f1 50%, #f97316 100%);
   border-radius: var(--radius-full);
   transition: width 0.08s linear;
-  box-shadow: 0 0 12px rgba(99, 102, 241, 0.75);
+  box-shadow: 0 0 14px rgba(99, 102, 241, 0.8);
 }
 

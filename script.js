@@ -2790,7 +2790,7 @@ function initBranchChips() {
 }
 
 // ===================================================================
-// 18. BESPOKE SITE LAUNCH CONTROLLER (Human-Crafted, Non-Gimmick)
+// 18. MODERN AERODYNAMIC ROCKET LAUNCH CONTROLLER
 // ===================================================================
 let siteLaunchState = {
   active: false,
@@ -2804,7 +2804,7 @@ function initSiteLaunchAnimation() {
 
   const urlParams = new URLSearchParams(window.location.search);
   const forceLaunch = urlParams.get("launch") === "1" || urlParams.get("launch") === "true";
-  const hasSeen = sessionStorage.getItem("hasSeenSiteLaunch_v2");
+  const hasSeen = sessionStorage.getItem("hasSeenRocketLaunch_v3");
 
   if (!hasSeen || forceLaunch) {
     runLaunchSequence(overlay);
@@ -2821,46 +2821,81 @@ function runLaunchSequence(overlay) {
   const bar = document.getElementById("launch-bar-fill");
   const counter = document.getElementById("launch-counter");
   const msg = document.getElementById("launch-status-msg");
+  const rocket = document.getElementById("rocket-assembly");
+  const flame = document.getElementById("thruster-flame");
+  const glow = document.getElementById("thruster-glow");
+  const smoke = document.getElementById("launch-smoke");
 
   overlay.style.display = "flex";
   overlay.classList.remove("launch-done");
   siteLaunchState.active = true;
   siteLaunchState.progress = 0;
 
-  const milestones = [
-    { at: 18, text: "Curating personalized career tracks..." },
-    { at: 48, text: "Aligning multi-domain roadmaps..." },
-    { at: 78, text: "Calibrating skill intelligence..." },
-    { at: 96, text: "Ready to explore." }
+  // Reset visual stages
+  if (rocket) {
+    rocket.classList.remove("rocket-ignited", "rocket-liftoff");
+    rocket.style.transform = "none";
+  }
+  if (flame) flame.classList.remove("ignited");
+  if (glow) glow.classList.remove("ignited");
+  if (smoke) smoke.classList.remove("active");
+
+  const stages = [
+    { at: 15, text: "Pre-flight telemetry & student profile sync...", counter: "T-03" },
+    { at: 40, text: "Pressurizing knowledge & skill pathways...", counter: "T-02" },
+    { at: 65, text: "Main thrusters ignited • Systems nominal...", counter: "T-01" },
+    { at: 88, text: "Full thrust output • Cleared for liftoff!", counter: "IGNITION" },
+    { at: 100, text: "Liftoff confirmed! Entering career orbit...", counter: "LIFTOFF!" }
   ];
 
   const startTime = performance.now();
-  const duration = 1400; // 1.4 seconds total: fast, polished, non-blocking
+  const duration = 1800; // ~1.8 seconds total for clean aerodynamic rocket launch
 
   function frame(now) {
     const elapsed = now - startTime;
     const fraction = Math.min(1, elapsed / duration);
     // Smooth ease-out quad curve
-    const eased = 1 - Math.pow(1 - fraction, 2.2);
+    const eased = 1 - Math.pow(1 - fraction, 2);
     const percent = Math.min(100, Math.round(eased * 100));
 
     siteLaunchState.progress = percent;
     if (bar) bar.style.width = `${percent}%`;
-    if (counter) counter.textContent = `${percent}%`;
 
-    for (let i = milestones.length - 1; i >= 0; i--) {
-      if (percent >= milestones[i].at) {
-        if (msg && msg.textContent !== milestones[i].text) {
-          msg.textContent = milestones[i].text;
+    // Handle stage milestones
+    for (let i = stages.length - 1; i >= 0; i--) {
+      if (percent >= stages[i].at) {
+        if (msg && msg.textContent !== stages[i].text) {
+          msg.textContent = stages[i].text;
+        }
+        if (counter && counter.textContent !== stages[i].counter) {
+          counter.textContent = stages[i].counter;
         }
         break;
       }
     }
 
+    // Engine ignition at 65%
+    if (percent >= 65 && rocket && !rocket.classList.contains("rocket-ignited") && !rocket.classList.contains("rocket-liftoff")) {
+      rocket.classList.add("rocket-ignited");
+      if (flame) flame.classList.add("ignited");
+      if (glow) glow.classList.add("ignited");
+      if (smoke) smoke.classList.add("active");
+    }
+
+    // Liftoff sequence at 100%
+    if (percent >= 100) {
+      if (rocket) {
+        rocket.classList.remove("rocket-ignited");
+        rocket.classList.add("rocket-liftoff");
+      }
+      setTimeout(() => {
+        finishLaunchSequence(overlay);
+      }, 700);
+      return;
+    }
+
     if (fraction < 1) {
       siteLaunchState.animFrameId = requestAnimationFrame(frame);
-    } else {
-      finishLaunchSequence(overlay);
     }
   }
 
@@ -2872,14 +2907,12 @@ function finishLaunchSequence(overlay) {
   if (!overlay) return;
 
   siteLaunchState.active = false;
-  sessionStorage.setItem("hasSeenSiteLaunch_v2", "true");
+  sessionStorage.setItem("hasSeenRocketLaunch_v3", "true");
 
+  overlay.classList.add("launch-done");
   setTimeout(() => {
-    overlay.classList.add("launch-done");
-    setTimeout(() => {
-      overlay.style.display = "none";
-    }, 850);
-  }, 160);
+    overlay.style.display = "none";
+  }, 650);
 }
 
 function skipSiteLaunch() {
