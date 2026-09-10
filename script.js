@@ -2241,6 +2241,9 @@ function bootApplication() {
     // Modern, refined UI micro-interactions and stream selector chips
     initModernUIEffects();
     initBranchChips();
+    if (document.getElementById("site-launch-overlay")) {
+      initSiteLaunchAnimation();
+    }
 
     // DOM-based detection (100% resilient across all URLs, file://, localhost, and clean rewrite routes)
     if (document.getElementById("profile-form")) {
@@ -2786,14 +2789,124 @@ function initBranchChips() {
   });
 }
 
-// Backward-compatible fallback stubs (guarantees zero console warnings or breakage)
-function startWebsiteLaunchAnimation() {
-  const target = document.querySelector(".hero-actions") || document.querySelector("main");
-  if (target) target.scrollIntoView({ behavior: "smooth" });
+// ===================================================================
+// 18. BESPOKE SITE LAUNCH CONTROLLER (Human-Crafted, Non-Gimmick)
+// ===================================================================
+let siteLaunchState = {
+  active: false,
+  animFrameId: null,
+  progress: 0
+};
+
+function initSiteLaunchAnimation() {
+  const overlay = document.getElementById("site-launch-overlay");
+  if (!overlay) return;
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const forceLaunch = urlParams.get("launch") === "1" || urlParams.get("launch") === "true";
+  const hasSeen = sessionStorage.getItem("hasSeenSiteLaunch_v2");
+
+  if (!hasSeen || forceLaunch) {
+    runLaunchSequence(overlay);
+  } else {
+    overlay.classList.add("launch-done");
+    overlay.style.display = "none";
+  }
 }
 
-function initLaunchAnimation() {}
-function skipWebsiteLaunchAnimation() {}
+function runLaunchSequence(overlay) {
+  if (!overlay) overlay = document.getElementById("site-launch-overlay");
+  if (!overlay) return;
+
+  const bar = document.getElementById("launch-bar-fill");
+  const counter = document.getElementById("launch-counter");
+  const msg = document.getElementById("launch-status-msg");
+
+  overlay.style.display = "flex";
+  overlay.classList.remove("launch-done");
+  siteLaunchState.active = true;
+  siteLaunchState.progress = 0;
+
+  const milestones = [
+    { at: 18, text: "Curating personalized career tracks..." },
+    { at: 48, text: "Aligning multi-domain roadmaps..." },
+    { at: 78, text: "Calibrating skill intelligence..." },
+    { at: 96, text: "Ready to explore." }
+  ];
+
+  const startTime = performance.now();
+  const duration = 1400; // 1.4 seconds total: fast, polished, non-blocking
+
+  function frame(now) {
+    const elapsed = now - startTime;
+    const fraction = Math.min(1, elapsed / duration);
+    // Smooth ease-out quad curve
+    const eased = 1 - Math.pow(1 - fraction, 2.2);
+    const percent = Math.min(100, Math.round(eased * 100));
+
+    siteLaunchState.progress = percent;
+    if (bar) bar.style.width = `${percent}%`;
+    if (counter) counter.textContent = `${percent}%`;
+
+    for (let i = milestones.length - 1; i >= 0; i--) {
+      if (percent >= milestones[i].at) {
+        if (msg && msg.textContent !== milestones[i].text) {
+          msg.textContent = milestones[i].text;
+        }
+        break;
+      }
+    }
+
+    if (fraction < 1) {
+      siteLaunchState.animFrameId = requestAnimationFrame(frame);
+    } else {
+      finishLaunchSequence(overlay);
+    }
+  }
+
+  siteLaunchState.animFrameId = requestAnimationFrame(frame);
+}
+
+function finishLaunchSequence(overlay) {
+  if (!overlay) overlay = document.getElementById("site-launch-overlay");
+  if (!overlay) return;
+
+  siteLaunchState.active = false;
+  sessionStorage.setItem("hasSeenSiteLaunch_v2", "true");
+
+  setTimeout(() => {
+    overlay.classList.add("launch-done");
+    setTimeout(() => {
+      overlay.style.display = "none";
+    }, 850);
+  }, 160);
+}
+
+function skipSiteLaunch() {
+  const overlay = document.getElementById("site-launch-overlay");
+  if (!overlay) return;
+  if (siteLaunchState.animFrameId) {
+    cancelAnimationFrame(siteLaunchState.animFrameId);
+  }
+  finishLaunchSequence(overlay);
+}
+
+function replaySiteLaunch() {
+  const overlay = document.getElementById("site-launch-overlay");
+  if (!overlay) return;
+  runLaunchSequence(overlay);
+}
+
+function startWebsiteLaunchAnimation() {
+  replaySiteLaunch();
+}
+
+function initLaunchAnimation() {
+  initSiteLaunchAnimation();
+}
+function skipWebsiteLaunchAnimation() {
+  skipSiteLaunch();
+}
 function toggleLaunchAudio() {}
 function fireLaunchConfetti() {}
 
@@ -2810,6 +2923,9 @@ if (typeof window !== "undefined") {
   window.openComparisonModal = openComparisonModal;
   window.closeComparisonModal = closeComparisonModal;
   window.updateComparisonView = updateComparisonView;
+  window.initSiteLaunchAnimation = initSiteLaunchAnimation;
+  window.replaySiteLaunch = replaySiteLaunch;
+  window.skipSiteLaunch = skipSiteLaunch;
   window.initLaunchAnimation = initLaunchAnimation;
   window.startWebsiteLaunchAnimation = startWebsiteLaunchAnimation;
   window.skipWebsiteLaunchAnimation = skipWebsiteLaunchAnimation;

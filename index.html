@@ -12,6 +12,55 @@
 </head>
 <body>
 
+  <!-- High-End Bespoke Site Launch Experience -->
+  <div id="site-launch-overlay" class="site-launch-overlay" aria-hidden="true">
+    <div class="launch-backdrop-glow"></div>
+    <button type="button" class="launch-skip-link" onclick="skipSiteLaunch()" title="Skip introduction">
+      Skip ✕
+    </button>
+    <div class="launch-stage">
+      <div class="launch-emblem-wrap">
+        <div class="launch-glow-ring"></div>
+        <div class="launch-emblem-circle">
+          <svg class="launch-compass-svg" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="24" cy="24" r="22" stroke="rgba(129, 140, 248, 0.35)" stroke-width="2" stroke-dasharray="4 4" />
+            <circle cx="24" cy="24" r="16" stroke="rgba(255, 255, 255, 0.15)" stroke-width="1.5" />
+            <!-- Dynamic Precision Compass Needle -->
+            <path class="compass-needle" d="M24 8 L28 24 L24 22 L20 24 Z" fill="url(#needleGradNorth)" />
+            <path class="compass-needle-south" d="M24 40 L20 24 L24 26 L28 24 Z" fill="url(#needleGradSouth)" />
+            <circle cx="24" cy="24" r="3" fill="#ffffff" />
+            <defs>
+              <linearGradient id="needleGradNorth" x1="20" y1="8" x2="28" y2="24" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#38bdf8" />
+                <stop offset="100%" stop-color="#4f46e5" />
+              </linearGradient>
+              <linearGradient id="needleGradSouth" x1="20" y1="24" x2="28" y2="40" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#64748b" />
+                <stop offset="100%" stop-color="#334155" />
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+      </div>
+
+      <div class="launch-brand-group">
+        <span class="launch-kicker">PERSONALIZED EDUCATION & CAREER PATHWAYS</span>
+        <h1 class="launch-title">CareerPath</h1>
+        <div class="launch-tagline">One-Stop Advisor</div>
+      </div>
+
+      <div class="launch-status-card">
+        <div class="launch-status-header">
+          <span id="launch-status-msg" class="launch-status-msg">Preparing personalized pathways...</span>
+          <span id="launch-counter" class="launch-counter">0%</span>
+        </div>
+        <div class="launch-track">
+          <div id="launch-bar-fill" class="launch-bar-fill"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Navigation Bar -->
   <header class="navbar">
     <div class="nav-container container">
@@ -33,6 +82,9 @@
       </ul>
 
       <div style="display: flex; align-items: center; gap: 0.6rem;">
+        <button class="btn-share-badge" onclick="replaySiteLaunch()" title="Experience site launch animation">
+          <span>✨</span> Launch Intro
+        </button>
         <button class="btn-share-badge" onclick="openShareModal()" title="Get direct shareable link for any student">
           <span>🔗</span> Share Link
         </button>
@@ -73,6 +125,9 @@
           </a>
           <button type="button" class="btn btn-secondary btn-lg" onclick="openComparisonModal()">
             <span>⚖️</span> Compare Careers
+          </button>
+          <button type="button" class="btn btn-outline-primary btn-lg" onclick="replaySiteLaunch()" title="Experience launch animation">
+            <span>✨</span> Launch Intro
           </button>
         </div>
 
